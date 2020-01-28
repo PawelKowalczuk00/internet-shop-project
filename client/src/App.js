@@ -29,7 +29,7 @@ const App = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Navbar />
-        <div className="mx-5 mb-3">
+        <div className="container mx-5 mb-3">
           <div className="row">
             <main className="col-12 col-md-10">
               <Route path="/" exact component={Home} />

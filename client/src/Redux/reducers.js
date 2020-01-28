@@ -12,10 +12,11 @@ const compare = (productsToCompare = [], action) => {
     return productsToCompare;
 }
 
-const list = (productsList = {
-    list: [],
-    count: 0
-}, action) => {
+const list = (productsList =
+    {
+        list: [],
+        count: 0
+    }, action) => {
     if (action.type === "LIST")
         return action.payload;
     return productsList;
@@ -25,7 +26,7 @@ const basket = (basket = [], action) => {
     if (action.type === "ADD_TO_BASKET")
         return [...basket, action.payload];
     return basket;
-} 
+}
 
 const info = (info = { route: "/register" }, action) => {
     if (action.type === "INFO")
@@ -33,4 +34,4 @@ const info = (info = { route: "/register" }, action) => {
     return info;
 }
 
-export default combineReducers({selectOne, compare, list, basket, info})
+export default combineReducers({ selectOne, compare, list, basket, info })
