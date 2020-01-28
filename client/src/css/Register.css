@@ -1,0 +1,12 @@
+input.form-control {
+    max-width: 500px !important;
+}
+
+.btn[type="submit"] {
+    width: 8em;
+    height: 4em;
+}
+
+div.text-wrap {
+    font-size: smaller;
+}

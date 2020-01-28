@@ -1,0 +1,1 @@
+export default () => localStorage.getItem('userStorage') === "local" ? localStorage : sessionStorage;
