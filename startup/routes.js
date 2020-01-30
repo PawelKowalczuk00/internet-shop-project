@@ -28,7 +28,7 @@ export default (app) => {
 
     //unknown url path - works only in production mode
     app.get('*', (req,res) => {     
-        res.redirect("https://" + req.headers.host + req.url);
+        res.redirect("https://internet-shop-project-pk2020.herokuapp.com/");
     });
 
     //error route

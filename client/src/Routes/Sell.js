@@ -27,7 +27,7 @@ class Sell extends React.Component {
 
     onSellSubmit = (e) => {
         e.preventDefault();
-        this.setState({loader: true});
+        this.setState({ loader: true });
         createOffer({
             name: this.state.name.trim().split(" "),
             description: this.state.description.trim().split(" "),
@@ -40,9 +40,10 @@ class Sell extends React.Component {
                 console.log(er);
                 this.setState({ error: er.response?.data || er.message });
                 setTimeout(() => {
-                    if (er.response.status === 403)
-                    this.setState({redirect: true});
-                    this.props.pushUrl("/sell");
+                    if (er.response?.status === 403) {
+                        this.setState({ redirect: true });
+                        this.props.pushUrl("/sell");
+                    }
                 }, 1500)
             })
             .finally(() => this.mounted ? this.setState({ loader: false }) : null);
