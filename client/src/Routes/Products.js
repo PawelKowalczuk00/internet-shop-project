@@ -18,8 +18,24 @@ class Products extends React.Component {
     }
 
     componentDidMount() {
+        this.mounted = true;
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+    }
+
+    componentDidMount() {
+        this.setState({ loadig: true });
         this.props.generateProductsList()
-            .finally(() => this.setState({ loadig: false }));
+            .catch(er => {
+                console.log('er :', er);
+                if (er.response)
+                    this.setState({ error: er.response.data });
+                else
+                    this.setState({ error: er.messsage });
+            })
+            .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }
 
     search = () => {
@@ -30,29 +46,27 @@ class Products extends React.Component {
         if (this.state.redirect)
             return <Redirect to={this.state.redirect} />
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="d-none d-md-block col-md-4 offset-lg-1 col-lg-3 offset-xl-2 col-xl-2">
-                        Filtry<br />
-                        assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss<br />
-                        assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss<br />
-                        assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss<br />
-                        assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss<br />
-                    </div>
-                    <form className="col-12 col-md-8 ml-md-3">
+            <>
+                <div className="d-none d-sm-block col-sm-3 col-md-2 text-wrap filters">
+                    Filtry<br />
+                    assssss ssssss  ssss sss  sssssssss ss   sssssssss sss  ssss ssss ssssssssssssss<br />
+                    a ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssssssss<br />
+                    a ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssssssss<br />
+                    a ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssssssss<br />
+                </div>
+                <div className="col-12 col-sm-9 col-md-8">
+                    <form className="searchbar">
                         <input type="text" placeholder="Search for product" value={this.state.keywords}
                             onChange={(e) => this.setState({ keywords: e.target.value })} />
-                        <button onClick={this.search} className="btn-danger"><i className="icon-search" /></button>
+                        <button onClick={this.search} className="btn-danger ml-2"><i className="icon-search" /></button>
                     </form>
-                    <div className="col-12 offset-md-4 col-md-8">
-                        {this.state.loader ? <Loader /> : <List list={this.props.productsList} />}
-                    </div>
-                    <div className="col-12 offset-md-4 col-md-8">
+                    {this.state.loader ? <Loader /> : <List list={this.props.productsList} />}
+                    <div className="pagination mt-4">
                         Paginacja<br />
-                        assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss<br />
+                        a ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssss ssssssss<br />
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
 }

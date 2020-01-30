@@ -34,4 +34,12 @@ const info = (info = { route: "/register" }, action) => {
     return info;
 }
 
-export default combineReducers({ selectOne, compare, list, basket, info })
+const urlQueue = (urlQueue = false, action) => {
+    if (action.type === "PUSH_URL")
+        return action.payload;
+    else if (action.type === "POP_URL")
+        return false;
+    return urlQueue;
+}
+
+export default combineReducers({ selectOne, compare, list, basket, info, urlQueue })

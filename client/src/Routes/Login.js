@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { login } from '../Functions/axios';
-import { info } from '../Redux/actionCreators';
+import { info, popUrl } from '../Redux/actionCreators';
 import Loader from '../Components/LoaderComponent';
 import storage from '../Functions/userStorage';
 
@@ -46,7 +46,10 @@ class Login extends React.Component {
                 });
                 storage().setItem('x-auth-token', res.headers['x-auth-token']);
                 storage().setItem('id', res.headers['x-id']);
-                this.setState({redirect: true});
+                console.log(this.props.returnUrl);
+                
+                this.setState({ redirect: this.props.returnUrl || "/user" });
+                popUrl();
             })
             .catch(er => {
                 console.log('er :', er);
@@ -55,7 +58,7 @@ class Login extends React.Component {
                 else
                     this.setState({ error: er.messsage });
             })
-            .finally(() => this.mounted ? this.setState({ loader: false }):null);
+            .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }
 
     storageManage = (e) => {
@@ -69,53 +72,52 @@ class Login extends React.Component {
 
     render() {
         if (this.state.redirect)
-            return <Redirect to="/user"/>
+            return <Redirect to={this.state.redirect} />
         else if (this.state.loader)
             return <Loader />
         return (
-            <div className="container">
-                <div className="row">
-                    <form onSubmit={this.onLoginSubmit} className="col-11 col-md-9 offset-lg-2 col-lg-7">
-                        {this.state.error ? <span className="alert-danger">{this.state.error}</span> : null}
-                        <div className="form-group">
-                            <label htmlFor="email" className="d-block">Email address</label>
-                            <input type="email" className="form-control d-inline-block" id="email" placeholder="email@example.com" aria-describedby="emailHelp"
-                                value={this.state.email}
-                                onChange={(e) => this.setState({ email: e.target.value })}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password" className="d-block">Password </label>
-                            <input type="password" className="form-control d-inline-block" id="password" placeholder="********"
-                                value={this.state.password}
-                                onChange={(e) => this.setState({ password: e.target.value })}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>
-                                <input type="checkbox"
-                                    checked={this.state.checked}
-                                    onChange={this.storageManage}
-                                />
-                                Remember me
-                            </label>
-                        </div>
-                        <button type="submit" className="btn btn-danger">Log in</button>
-                    </form>
-                    <div className="col-12 col-md-3 mt-3">
-                        <Link to="/register">
-                            <div className="btn btn-block btn-dark text-center text-white">New Member?<br /> Register now!</div>
-                        </Link>
+            <>
+                <form onSubmit={this.onLoginSubmit} className="col-12 col-md-7 offset-lg-1 col-lg-6">
+                    {this.state.error ? <span className="alert-danger">{this.state.error}</span> : null}
+                    <div className="form-group">
+                        <label htmlFor="email" className="d-block">Email address</label>
+                        <input type="email" className="form-control d-inline-block" id="email" placeholder="email@example.com" aria-describedby="emailHelp"
+                            value={this.state.email}
+                            onChange={(e) => this.setState({ email: e.target.value })}
+                        />
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="d-block">Password </label>
+                        <input type="password" className="form-control d-inline-block" id="password" placeholder="********"
+                            value={this.state.password}
+                            onChange={(e) => this.setState({ password: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>
+                            <input type="checkbox"
+                                checked={this.state.checked}
+                                onChange={this.storageManage}
+                            />
+                            Remember me
+                            </label>
+                    </div>
+                    <button type="submit" className="btn btn-danger">Log in</button>
+                </form>
+                <div className="col-12 col-md-3 mt-4 mt-md-3">
+                    <Link to="/register">
+                        <div className="btn btn-block btn-dark text-center text-white">New Member?<br /> Register now!</div>
+                    </Link>
                 </div>
-            </div>
+            </>
         );
     }
 }
 
 const mapStoreToProps = (store) => {
     return {
-        getInfo: store.info
+        getInfo: store.info,
+        returnUrl: store.urlQueue
     };
 }
 

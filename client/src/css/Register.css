@@ -1,5 +1,5 @@
-input.form-control {
-    max-width: 500px !important;
+input {
+    max-width: 85vw;
 }
 
 .btn[type="submit"] {
@@ -9,4 +9,8 @@ input.form-control {
 
 div.text-wrap {
     font-size: smaller;
+}
+
+.btn-success {
+    height: 3rem;
 }

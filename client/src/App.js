@@ -29,9 +29,8 @@ const App = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Navbar />
-        <div className="container mx-5 mb-3">
+        <div className="container mx-1 mx-md-2 mx-lg-5 mb-3">
           <div className="row">
-            <main className="col-12 col-md-10">
               <Route path="/" exact component={Home} />
               <Route path="/products" exact component={Products} />
               <Route path="/basket" exact component={Basket} />
@@ -43,8 +42,7 @@ const App = () => {
               <Route path="/comparision" exact component={Comparision} />
               <Route path="/sell" exact component={Sell} />
               <Route path="/buy" exact component={Buy} />
-            </main>
-            <aside className="d-none d-md-block col-md-2">
+            <aside className="d-none d-md-block col-md-2 text-right">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mi lectus, hendrerit id nunc sit amet, malesuada suscipit sapien. Sed enim sapien, commodo vitae dignissim sit amet, iaculis ut justo. Aliquam scelerisque leo semper, commodo enim sit amet, cursus massa. Mauris vitae mollis nunc, sit amet interdum odio. Mauris finibus.
               Reklama
             </aside>

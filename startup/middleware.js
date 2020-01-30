@@ -10,8 +10,9 @@ import httpsOnly from '../middleware/httpsOnly.js';
 export default (app) => {
     logger.debug('Using middleware');
     //CORS setup => https://expressjs.com/en/resources/middleware/cors.html
+    const origins = process.env.NODE_ENV === 'development' ? [/http:\/\/localhost:3000*/, /http:\/\/localhost:5000*/] : /https:\/\/internet-shop-project-pk2020.herokuapp.com*/;
     app.use(cors({
-        origin: [/https:\/\/internet-shop-project-pk2020.herokuapp.com/, /http:\/\/localhost:3000/, /http:\/\/localhost:5000/], allowedHeaders: 'content-length, content-type, x-auth-token',
+        origin: origins, allowedHeaders: 'content-length, content-type, x-auth-token',
         exposedHeaders: ['x-auth-token', 'x-id'], credentials: true
     }));
     app.options('*', cors());
@@ -24,7 +25,7 @@ export default (app) => {
     }
     else {
         const morganFormat = 'tiny';
-        app.use(morgan(morganFormat)); 
+        app.use(morgan(morganFormat));
         logger.debug(`Using development morgan-${morganFormat}.`);
     }
     app.use(express.json());

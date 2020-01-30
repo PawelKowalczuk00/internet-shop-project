@@ -4,21 +4,19 @@ import '../css/List.css';
 
 const List = (props) => {
     return (
-        <div className="container-fluid">
-            <div className="d-flex justify-content-between flex-wrap">
+            <div className="d-flex flex-wrap justify-content-center">
                 {props.list.map(prod => {
                     return (
-                        <div className="product">
-                            <ul className="list-group list-unstyled">
-                                <li className="list-group-item"><h4>Name: </h4><span className="text-capitalize">{prod.name.join(" ")}</span></li>
-                                <li className="list-group-item"><h4>Price: </h4><span className="font-weight-bolder">{prod.price}</span></li>
-                                <li className="list-group-item"><h4>Description: </h4><span className="text-capitalize descr">{prod.description.join(" ")}</span></li>
+                        <div className="product m-md-1">
+                            <ul className="list-group list-unstyled flex-grow-1 flex-shrink-1">
+                                <li className="list-group-item"><span className="text-dark font-weight-bolder">Name: </span><span className="text-capitalize text-left">{prod.name.join(" ")}</span></li>
+                                <li className="list-group-item"><span className="text-dark font-weight-bolder">Price: </span><span className="font-weight-bolder text-left">{prod.price}</span></li>
+                                <li className="list-group-item"><p className="text-capitalize descr">{prod.description.join(" ")}</p></li>
                             </ul>
                         </div>
                     );
                 })}
             </div>
-        </div>
     );
 }
 

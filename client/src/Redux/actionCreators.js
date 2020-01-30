@@ -7,20 +7,27 @@ export const info = (info) => {
     }
 }
 
+export const pushUrl = (url) => {
+    return {
+        type: "PUSH_URL",
+        payload: url
+    }
+}
+
+export const popUrl = () => {
+    return {
+        type: "POP_URL",
+    }
+}
+
 export const compareProducts = (ids) => {
     let products = [];
     return dispatch => {
-        try {
             ids.map(async id => products.push(JSON.parse(await getSingleProduct(id))));
             return dispatch({
                 type: "COMPARE",
                 payload: products
             })
-        }
-        catch (er) {
-            console.log(er);
-            return;
-        }
     }
 }
 
@@ -40,10 +47,6 @@ export const selectProduct = (id) => {
                     payload: JSON.parse(res)
                 })
             })
-            .catch(er => {
-                console.log(er);
-                return;
-            })
     }
 }
 
@@ -58,10 +61,6 @@ export const generateProductsList = (body, filters) => {
                         count: res.data.howMany
                     }
                 })
-            })
-            .catch(er => {
-                console.log(er);
-                return;
             })
     }
 }
