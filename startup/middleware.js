@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import 'express-async-errors';
 
 import logger from '../functions/logger.js';
-import httpsOnly from '../middleware/httpsOnly.js';
 
 export default (app) => {
     logger.debug('Using middleware');
@@ -20,7 +19,6 @@ export default (app) => {
         helmet.referrerPolicy({ policy: 'origin' });
         app.use(helmet());
         app.use(express.static('./client/build'));
-        app.use(httpsOnly);
         logger.debug('Using production.');
     }
     else {
