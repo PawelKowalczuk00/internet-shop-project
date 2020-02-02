@@ -10,7 +10,7 @@ import httpsOnly from '../middleware/httpsOnly.js';
 export default (app) => {
     logger.debug('Using middleware');
     //CORS setup => https://expressjs.com/en/resources/middleware/cors.html
-    const origins = process.env.NODE_ENV === 'development' ? [/http:\/\/localhost:3000*/, /http:\/\/localhost:5000*/] : /https:\/\/internet-shop-project-pk2020.herokuapp.com*/;
+    const origins = process.env.NODE_ENV === 'development' ? [/http:\/\/localhost:3000/, /http:\/\/localhost:5000/] : /https:\/\/internet-shop-project-pk2020.herokuapp.com/;
     app.use(cors({
         origin: origins, allowedHeaders: 'content-length, content-type, x-auth-token',
         exposedHeaders: ['x-auth-token', 'x-id'], credentials: true

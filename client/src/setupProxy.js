@@ -2,9 +2,9 @@ const proxy = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
-    '/api/*',
+    '/api',
     proxy({
-      target: 'https://internet-shop-project-pk2020.herokuapp.com',
+      target: 'http://localhost:5000',
       changeOrigin: true,
     })
   );

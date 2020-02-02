@@ -19,9 +19,10 @@ const productSchema = new mongoose.Schema({
         max: 999999,
         required: true
     },
+    imgUrl: String,
     seller: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "user",
+        ref: "users",
         required: true
     },
     exposeDate: {
@@ -43,6 +44,7 @@ export const validateBody = (body) => {
         name: joi.array().min(2).max(60).required(),
         description: joi.array().max(1000),
         price: joi.number().min(0).max(999999).required(),
+        imgUrl: joi.forbidden(),
         seller: joi.forbidden(),
         exposeDate: joi.forbidden(),
         transaction: joi.forbidden(),

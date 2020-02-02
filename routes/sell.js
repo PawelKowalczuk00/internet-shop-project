@@ -22,7 +22,7 @@ route.post('/', async (req, res) => {
     sendProdPostEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
     //attaching product to active offers of an user
     await User.findByIdAndUpdate(req.user._id, { $push: { activeProducts: product._id } });
-    return res.status(201).send("Product succesfully exposed.");
+    return res.status(201).send(product);
 })
 
 route.delete('/:id', async (req, res) => {

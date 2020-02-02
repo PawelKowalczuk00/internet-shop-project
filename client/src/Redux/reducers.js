@@ -25,6 +25,8 @@ const list = (productsList =
 const basket = (basket = [], action) => {
     if (action.type === "ADD_TO_BASKET")
         return [...basket, action.payload];
+    else if (action.type === "REMOVE_FROM_BASKET")
+        return basket.filter(prod => prod._id !== action.payload)
     return basket;
 }
 

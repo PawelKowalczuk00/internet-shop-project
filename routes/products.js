@@ -23,7 +23,7 @@ route.post('/', async (req, res) => {
             .or([{ name: { $in: keywords } }, { description: { $in: keywords } }])
             .skip(page * range)
             .limit(range)
-            .select("name description price")
+            .select("name description price _id")
             .sort(order + sort);
         howMany = await Product
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
@@ -35,7 +35,7 @@ route.post('/', async (req, res) => {
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
             .skip(page * range)
             .limit(range)
-            .select("name description price")
+            .select("name description price _id")
             .sort(order + sort);
         howMany = await Product
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
@@ -45,7 +45,10 @@ route.post('/', async (req, res) => {
 });
 
 route.get('/:id', async (req, res) => {
-    const product = await Product.findById(req.params.id).select("-__v");
+    const product = await Product.findById(req.params.id)
+    .populate('seller', 'email -_id')
+    .populate('transaction')
+    .select("-__v");
     if (product)
         return res.send(product);
     else

@@ -27,7 +27,7 @@ export default (app) => {
     app.use('/api/sell', auth, sell);
 
     //unknown url path - works only in production mode
-    app.get('*', (req,res) => {     
+    app.use('*', (req,res) => {     
         res.redirect("https://internet-shop-project-pk2020.herokuapp.com/");
     });
 

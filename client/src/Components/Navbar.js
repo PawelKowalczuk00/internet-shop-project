@@ -76,7 +76,7 @@ class Navbar extends React.Component {
                     <div className="d-inline-block mx-1 mx-lg-3 thumbnails">
                         <Link to="/basket">
                             <i className="icon-basket text-white " />
-                            <span className="basket-info text-right">{this.props.itemsCount || "5"}</span>
+                            <span className="basket-info text-right">{this.props.itemsCount}</span>
                         </Link>
                     </div>
                     <div className="d-inline-block mx-1 mx-lg-3 thumbnails">

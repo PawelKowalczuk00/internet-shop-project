@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { pushUrl } from '../Redux/actionCreators';
+import { pushUrl, selectProduct } from '../Redux/actionCreators';
 import Loader from '../Components/LoaderComponent';
 import { createOffer } from '../Functions/axios';
 
@@ -34,14 +34,15 @@ class Sell extends React.Component {
             price: this.state.price
         })
             .then(res => {
-                this.props.info(res.data)
+                this.setState({redirect: "/selled"});
+                this.props.selectProduct(res.data);
             })
             .catch(er => {
                 console.log(er);
                 this.setState({ error: er.response?.data || er.message });
                 setTimeout(() => {
                     if (er.response?.status === 403) {
-                        this.setState({ redirect: true });
+                        this.setState({ redirect: "/login" });
                         this.props.pushUrl("/sell");
                     }
                 }, 1500)
@@ -51,7 +52,7 @@ class Sell extends React.Component {
 
     render() {
         if (this.state.redirect)
-            return <Redirect to="/login" />
+            return <Redirect to={this.state.redirect} />
         else if (this.state.loader)
             return <Loader />
         return (
@@ -86,5 +87,5 @@ class Sell extends React.Component {
 }
 
 export default connect(null, {
-    pushUrl
+    pushUrl, selectProduct
 })(Sell);

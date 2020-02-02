@@ -23,11 +23,11 @@ export const popUrl = () => {
 export const compareProducts = (ids) => {
     let products = [];
     return dispatch => {
-            ids.map(async id => products.push(JSON.parse(await getSingleProduct(id))));
-            return dispatch({
-                type: "COMPARE",
-                payload: products
-            })
+        ids.map(async id => products.push(JSON.parse(await getSingleProduct(id))));
+        return dispatch({
+            type: "COMPARE",
+            payload: products
+        })
     }
 }
 
@@ -38,13 +38,25 @@ export const addToBasket = (prod) => {
     }
 }
 
-export const selectProduct = (id) => {
+export const removeFromBasket = (prodId) => {
+    return {
+        type: "REMOVE_FROM_BASKET",
+        payload: prodId
+    }
+}
+
+export const selectProduct = (idOrProduct) => {
+    if (typeof idOrProduct === 'object')
+        return {
+            type: "SELECT",
+            payload: idOrProduct
+        };
     return async dispatch => {
-        getSingleProduct(id)
+        getSingleProduct(idOrProduct)
             .then(res => {
                 dispatch({
                     type: "SELECT",
-                    payload: JSON.parse(res)
+                    payload: res.data
                 })
             })
     }

@@ -9,6 +9,7 @@ import reducers from './Redux/reducers';
 import Navbar from './Components/Navbar';
 import Home from './Routes/Home';
 import Products from './Routes/Products';
+import SelectedProduct from './Routes/SelectedProduct';
 import Basket from './Routes/Basket';
 import UserComponent from './Components/UserComponent';
 import Login from './Routes/Login';
@@ -17,6 +18,7 @@ import Registered from './Routes/Registered';
 import Account from './Routes/Account';
 import Comparision from './Routes/Comparision';
 import Sell from './Routes/Sell';
+import Selled from './Routes/Selled';
 import Buy from './Routes/Buy';
 
 
@@ -33,6 +35,7 @@ const App = () => {
           <div className="row">
               <Route path="/" exact component={Home} />
               <Route path="/products" exact component={Products} />
+              <Route path="/product" component={SelectedProduct} />
               <Route path="/basket" exact component={Basket} />
               <Route path="/user" exact component={UserComponent} />
               <Route path="/login" exact component={Login} />
@@ -41,6 +44,7 @@ const App = () => {
               <Route path="/account" exact component={Account} />
               <Route path="/comparision" exact component={Comparision} />
               <Route path="/sell" exact component={Sell} />
+              <Route path="/selled" exact component={Selled} />
               <Route path="/buy" exact component={Buy} />
             <aside className="d-none d-md-block col-md-2 text-right">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mi lectus, hendrerit id nunc sit amet, malesuada suscipit sapien. Sed enim sapien, commodo vitae dignissim sit amet, iaculis ut justo. Aliquam scelerisque leo semper, commodo enim sit amet, cursus massa. Mauris vitae mollis nunc, sit amet interdum odio. Mauris finibus.

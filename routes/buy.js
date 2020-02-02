@@ -22,7 +22,7 @@ route.get('/:id', async (req, res) => {
         if (buyer.saldo < product.price)
             return res.status(402).send("You don't have enough money.");
         /*buying: 
-        1) TRANSACTON: creating transaction +
+        1) TRANSACTION: creating transaction
         2) PRODUCT: finalized set to true and add transaction id
         3) SELLER: remove product from active products and add transaction id to transactionHistory, add money
         4) BUYER: add transaction id to transactionHistory, take money
