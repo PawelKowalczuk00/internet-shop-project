@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { pushUrl, selectProduct } from '../Redux/actionCreators';
 import Loader from '../Components/LoaderComponent';
+import storage from '../Functions/userStorage';
 import { createOffer } from '../Functions/axios';
 
 import '../css/Register.css';
@@ -13,12 +14,17 @@ class Sell extends React.Component {
         super(props);
         this.state = {
             name: "", description: "", price: 0,
-            error: null, loader: false, redirect: false
+            error: null, loader: false, redirect: false,
+            disabled: true
         }
     }
 
     componentDidMount() {
         this.mounted = true;
+        if (!(storage().getItem('saldo')))
+            this.setState({ error: "You have to be logged in and verified to buy products" });
+        else
+            this.setState({disabled: false})
     }
 
     componentWillUnmount() {
@@ -34,7 +40,7 @@ class Sell extends React.Component {
             price: this.state.price
         })
             .then(res => {
-                this.setState({redirect: "/selled"});
+                this.setState({ redirect: "/selled" });
                 this.props.selectProduct(res.data);
             })
             .catch(er => {
@@ -80,7 +86,7 @@ class Sell extends React.Component {
                         onChange={(e) => this.setState({ price: e.target.value })}
                     />
                 </div>
-                <button type="submit" className="btn-block btn-success font-weight-bolder">Create an offer</button>
+                <button type="submit" className="btn-block btn-success font-weight-bolder" disabled={this.state.disabled}>Create an offer</button>
             </form>
         );
     }

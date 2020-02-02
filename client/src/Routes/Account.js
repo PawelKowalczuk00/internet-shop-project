@@ -13,8 +13,7 @@ class Account extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mainLoad: false, activeOffersLoad: false, transactionHistoryLoad: false,
-            main: null, activeOffers: null, transactionHistory: null
+            mainLoad: false, activeOffersLoad: false, transactionHistoryLoad: false
         };
     }
 
@@ -29,6 +28,7 @@ class Account extends React.Component {
             .then(res => {
                 console.log('res.data :', res.data);
                 this.setState({ main: res.data });
+                storage().setItem('saldo', res.data.saldo)
             })
             .catch(er => {
                 console.log('er :', er);
@@ -54,10 +54,4 @@ class Account extends React.Component {
     }
 }
 
-const mapStoreToProps = (store) => {
-    return {
-        info: store.info
-    };
-}
-
-export default connect(mapStoreToProps, { info })(Account);
+export default connect(null, { info })(Account);

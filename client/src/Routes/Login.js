@@ -46,8 +46,6 @@ class Login extends React.Component {
                 });
                 storage().setItem('x-auth-token', res.headers['x-auth-token']);
                 storage().setItem('id', res.headers['x-id']);
-                console.log(this.props.returnUrl);
-                
                 this.setState({ redirect: this.props.returnUrl || "/user" });
                 popUrl();
             })
@@ -78,7 +76,7 @@ class Login extends React.Component {
         return (
             <>
                 <form onSubmit={this.onLoginSubmit} className="col-12 col-md-7 offset-lg-1 col-lg-6">
-                    {this.state.error ? <span className="alert-danger">{this.state.error}</span> : null}
+                    {this.state.error ? <span className="alert-danger m-2">{this.state.error}</span> : null}
                     <div className="form-group">
                         <label htmlFor="email" className="d-block">Email address</label>
                         <input type="email" className="form-control d-inline-block" id="email" placeholder="email@example.com" aria-describedby="emailHelp"

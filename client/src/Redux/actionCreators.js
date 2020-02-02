@@ -31,20 +31,6 @@ export const compareProducts = (ids) => {
     }
 }
 
-export const addToBasket = (prod) => {
-    return {
-        type: "ADD_TO_BASKET",
-        payload: prod
-    }
-}
-
-export const removeFromBasket = (prodId) => {
-    return {
-        type: "REMOVE_FROM_BASKET",
-        payload: prodId
-    }
-}
-
 export const selectProduct = (idOrProduct) => {
     if (typeof idOrProduct === 'object')
         return {

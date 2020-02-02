@@ -22,14 +22,6 @@ const list = (productsList =
     return productsList;
 }
 
-const basket = (basket = [], action) => {
-    if (action.type === "ADD_TO_BASKET")
-        return [...basket, action.payload];
-    else if (action.type === "REMOVE_FROM_BASKET")
-        return basket.filter(prod => prod._id !== action.payload)
-    return basket;
-}
-
 const info = (info = { route: "/register" }, action) => {
     if (action.type === "INFO")
         return action.payload;
@@ -44,4 +36,4 @@ const urlQueue = (urlQueue = false, action) => {
     return urlQueue;
 }
 
-export default combineReducers({ selectOne, compare, list, basket, info, urlQueue })
+export default combineReducers({ selectOne, compare, list, info, urlQueue })

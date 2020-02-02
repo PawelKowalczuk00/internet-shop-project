@@ -20,14 +20,3 @@
 .thumbnails:hover {
     transform: scale(1.2);
 }
-
-.basket-info {
-    text-decoration: none;
-    color: black;
-    position: absolute;
-    font-weight: bolder;
-    top: 50%;
-    right: 0;
-    margin: 0;
-    padding: 0;
-}

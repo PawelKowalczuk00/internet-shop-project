@@ -1,11 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import storage from '../Functions/userStorage';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
 import '../css/Navbar.css';
 import "../fontello/css/fontello.css";
 
@@ -74,12 +71,6 @@ class Navbar extends React.Component {
                 </div>
                 <div className="mx-2 ml-md-3 mr-lg-5 text-center"  onClick={this.onNavOtherClick}>
                     <div className="d-inline-block mx-1 mx-lg-3 thumbnails">
-                        <Link to="/basket">
-                            <i className="icon-basket text-white " />
-                            <span className="basket-info text-right">{this.props.itemsCount}</span>
-                        </Link>
-                    </div>
-                    <div className="d-inline-block mx-1 mx-lg-3 thumbnails">
                         <Link to="/user">
                             <i className="icon-adult text-white" />
                         </Link>
@@ -90,10 +81,4 @@ class Navbar extends React.Component {
     }
 }
 
-const mapStoreToProps = (store) => {
-    return {
-        itemsCount: store.basket.length
-    }
-}
-
-export default connect(mapStoreToProps)(Navbar);
+export default Navbar;

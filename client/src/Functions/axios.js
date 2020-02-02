@@ -2,8 +2,8 @@ import axios from 'axios';
 import userStorage from "./userStorage";
 
 const base = axios.create({
-    baseURL: "https://internet-shop-project-pk2020.herokuapp.com/api",
-    //baseURL: "http://localhost:5000/api",
+    //baseURL: "https://internet-shop-project-pk2020.herokuapp.com/api",
+    baseURL: "http://localhost:5000/api",
     headers: {
         "Content-Type": 'application/json'
     }

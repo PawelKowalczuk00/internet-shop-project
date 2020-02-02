@@ -13,7 +13,7 @@ route.get('/:token', async (req, res, next) => {
                 throw new Error(err.message, err);
             else {
                 sendEmailConfirmed(doc.email, `${doc.name} ${doc.surname}`);
-                return res.redirect("https://" + req.headers.host + "/account");
+                return res.redirect("https://internet-shop-project-pk2020.herokuapp.com/verified");
             }     
         });
     }

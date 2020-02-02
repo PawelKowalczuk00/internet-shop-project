@@ -22,7 +22,7 @@ class Selled extends React.Component {
                 state: {existingProduct: true}
             }}/>
         return (
-            <div className="text-center">
+            <div className="text-center col-12 offset-md-2 col-md-8 offset-lg-3 col-lg-7">
                 <h2 className="text-success">You have succesfully created an offer!</h2>
                 <p>Confirmation Email has been sent</p>
             </div>

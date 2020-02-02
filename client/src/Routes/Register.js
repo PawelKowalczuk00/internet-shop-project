@@ -7,8 +7,6 @@ import { register } from '../Functions/axios';
 import { info } from '../Redux/actionCreators';
 import Loader from '../Components/LoaderComponent';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
 import '../css/Register.css';
 import "../fontello/css/fontello.css";
 
@@ -150,8 +148,8 @@ class Register extends React.Component {
             return <Loader />
         return (
             <>
-                <form onSubmit={this.onRegisterSubmit} autocomplete="false" className="col-12 col-md-7 offset-lg-1 col-lg-6">
-                    {this.state.error ? <span className="alert-danger">{this.state.error}</span> : null}
+                <form onSubmit={this.onRegisterSubmit} autoComplete="false" className="col-12 col-md-7 offset-lg-1 col-lg-6">
+                    {this.state.error ? <span className="alert-danger m-2">{this.state.error}</span> : null}
                     <div className="form-group text-nowrap">
                         <label htmlFor="name" className="d-block">Name </label>
                         <div className="text-danger text-wrap m-1">{this.state.nameHelper}</div>

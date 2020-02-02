@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import Loader from '../Components/LoaderComponent';
-import { selectProduct, addToBasket } from '../Redux/actionCreators';
+import { selectProduct } from '../Redux/actionCreators';
+import { buy } from '../Functions/axios';
+import storage from '../Functions/userStorage';
 
 import '../css/SelectedProduct.css';
 
@@ -13,6 +15,7 @@ class SelectedProduct extends React.Component {
         super(props);
         this.state = {
             redirect: false, loader: false, error: null,
+            disabled: true
         };
     }
 
@@ -23,7 +26,37 @@ class SelectedProduct extends React.Component {
         this.setState({ loader: true });
         const { id } = queryString.parse(this.props.location.search);
         this.props.selectProduct(id)
-            .then(() => this.forceUpdate())
+            .then(() => {
+                if (!(storage().getItem('saldo')))
+                    this.setState({ error: "You have to be logged in and verified to buy products" });
+                else if (storage().getItem('saldo') < this.props.product.price)
+                    this.setState({ error: "You don't have enough money" });
+                else
+                    this.setState({ disabled: false });
+            })
+            .catch(er => {
+                console.log('er :', er);
+                if (er.response)
+                    this.setState({ error: er.response.data });
+                else
+                    this.setState({ error: er.messsage });
+            })
+            .finally(() => {
+                if (this.mounted) {
+                    this.setState({ loader: false });
+                    this.forceUpdate();
+                }
+            });
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+    }
+
+    buy = () => {
+        this.setState({ error: null, loader: true });
+        buy(this.props._id)
+            .then(res => this.setState({ redirect: "/bought" }))
             .catch(er => {
                 console.log('er :', er);
                 if (er.response)
@@ -34,31 +67,21 @@ class SelectedProduct extends React.Component {
             .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }
 
-    componentWillUnmount() {
-        this.mounted = false;
-    }
-
-    addToBasket = () => {
-        this.props.addToBasket(this.props.product);
-        this.setState({redirect: true});
-    }
-
     renderDetails() {
         const { product } = this.props;
         return (
             <>
                 <div className="col-12 col-md-10 offset-lg-1 col-lg-9">
-                    <img src={product.imgUrl} alt="Product photo" className="img-thumbnail" />
-                </div>
-                <div className="col-12 col-md-10 offset-lg-1 col-lg-9">
-                    {this.props.product.finalized ?
-                        <h2 className="text-danger text-muted">This product has been sold</h2>
-                        :
-                        <button className="btn btn-success m1" onClick={this.addToBasket}>Add to basket</button>
-                    }
-                </div>
-                <div className="col-12 col-md-10 offset-lg-1 col-lg-9">
-                    <table class="table table-bordered table-striped table-danger">
+                    {this.state.error ? <span className="alert-danger m-2">{this.state.error}</span> : null}<br />
+                    <img src={product.imgUrl} alt="Product" className="img-thumbnail" />
+                    <div className="text-right">
+                        {this.props.product.finalized ?
+                            <h2 className="text-danger text-muted">This product has been sold</h2>
+                            :
+                            <button className="btn btn-success m-1" onClick={this.buy} disabled={this.state.disabled}>Buy</button>
+                        }
+                    </div>
+                    <table className="table table-bordered table-striped table-danger">
                         <tbody>
                             <tr>
                                 <th scope="row">Name: </th>
@@ -97,7 +120,7 @@ class SelectedProduct extends React.Component {
 
     render() {
         if (this.state.redirect)
-            return <Redirect to="/basket" />
+            return <Redirect to={this.state.redirect} />
         return (
             <>
                 {this.state.loader ? <Loader /> : this.renderDetails()}
@@ -109,9 +132,10 @@ class SelectedProduct extends React.Component {
 const mapStoreToProps = (store) => {
     return {
         product: store.selectOne,
+        status: store.info.route
     };
 }
 
 export default connect(mapStoreToProps, {
-    selectProduct, addToBasket
+    selectProduct
 })(SelectedProduct);
