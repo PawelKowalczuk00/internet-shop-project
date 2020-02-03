@@ -1,4 +1,10 @@
+div.row {
+    position: relative;
+}
 
+aside {
+    right: 0;
+}
 
 footer {
     position: fixed;
