@@ -18,7 +18,10 @@ route.get('/:id', async (req, res) => {
     if (product && !product.finalized) {
         const buyer = await User.findById(req.user._id);
         const seller = await User.findById(product.seller);
-        //3 validation checking if buyer has enough money
+        //3 validation checking if buyer isnt the seller
+        if (buyer.equals(seller))
+            return res.status(403).send("You can't buy your own products");
+        //4 validation checking if buyer has enough money
         if (buyer.saldo < product.price)
             return res.status(402).send("You don't have enough money.");
         /*buying: 

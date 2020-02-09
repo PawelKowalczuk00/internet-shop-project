@@ -6,7 +6,7 @@ const Verified = () => {
         <div className="text-center col-12 offset-md-2 col-md-8 offset-lg-3 col-lg-7">
             <h2 className="text-success">You have succesfully verified your account!</h2>
             <Link to="/account">
-                <div className="btn btn-succes btn-block">Visit yor account</div>
+                <p>Visit yor account</p>
             </Link>
         </div>
     );

@@ -28,7 +28,7 @@ route.post('/', async (req, res) => {
         howMany = await Product
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
             .or([{ name: { $in: keywords } }, { description: { $in: keywords } }])
-            .count()
+            .countDocuments();
     }
     else {
         productsList = await Product
@@ -39,7 +39,7 @@ route.post('/', async (req, res) => {
             .sort(order + sort);
         howMany = await Product
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
-            .count()
+            .countDocuments();
     }
     res.send({ productsList, howMany });
 });

@@ -1,5 +1,4 @@
 import express from 'express';
-import joi from '@hapi/joi';
 
 import { sendProdPostEmail, sendProdPutEmail, sendProdDelEmail } from '../functions/emails.js';
 import Product, { validateBody } from '../dataBase/product.js';

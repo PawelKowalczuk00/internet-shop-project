@@ -51,7 +51,7 @@ class Sell extends React.Component {
                         this.setState({ redirect: "/login" });
                         this.props.pushUrl("/sell");
                     }
-                }, 1500)
+                }, 1500);
             })
             .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }

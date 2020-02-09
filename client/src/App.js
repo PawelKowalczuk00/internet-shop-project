@@ -15,7 +15,7 @@ import Login from './Routes/Login';
 import Register from './Routes/Register';
 import Registered from './Routes/Registered';
 import Verified from './Routes/Verified';
-import Account from './Routes/Account';
+import AccountLayout from './Routes/Account';
 import Comparision from './Routes/Comparision';
 import Sell from './Routes/Sell';
 import Selled from './Routes/Selled';
@@ -41,7 +41,7 @@ const App = () => {
               <Route path="/register" exact component={Register} />
               <Route path="/registered" exact component={Registered} />
               <Route path="/verified" exact component={Verified} />
-              <Route path="/account" exact component={Account} />
+              <Route path="/account" exact component={AccountLayout} />
               <Route path="/comparision" exact component={Comparision} />
               <Route path="/sell" exact component={Sell} />
               <Route path="/selled" exact component={Selled} />

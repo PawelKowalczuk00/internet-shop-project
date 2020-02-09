@@ -11,8 +11,7 @@ const List = (props) => {
                     <div className="product m-md-1">
                         <Link to={{
                             pathname: `/product`,
-                            search: `?id=${prod._id}`,
-                            state: { existingProduct: false }
+                            search: `?id=${prod._id}`
                         }}>
                             <ul className="list-group list-unstyled flex-grow-1 flex-shrink-1">
                                 <li className="list-group-item"><img src={prod.imgUrl} alt="Product" className="img-thumbnail" /></li>

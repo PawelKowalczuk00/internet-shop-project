@@ -14,16 +14,13 @@ class SelectedProduct extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false, loader: false, error: null,
+            redirect: false, loader: true, error: null,
             disabled: true
         };
     }
 
     componentDidMount() {
         this.mounted = true;
-        if (this.props.location.state?.existingProduct)
-            return;
-        this.setState({ loader: true });
         const { id } = queryString.parse(this.props.location.search);
         this.props.selectProduct(id)
             .then(() => {
@@ -44,7 +41,6 @@ class SelectedProduct extends React.Component {
             .finally(() => {
                 if (this.mounted) {
                     this.setState({ loader: false });
-                    this.forceUpdate();
                 }
             });
     }
@@ -54,8 +50,9 @@ class SelectedProduct extends React.Component {
     }
 
     buy = () => {
+        console.log('this.props.location + this.props.location.search :', this.props.location + this.props.location.search);
         this.setState({ error: null, loader: true });
-        buy(this.props._id)
+        buy(this.props.product._id)
             .then(res => this.setState({ redirect: "/bought" }))
             .catch(er => {
                 console.log('er :', er);
@@ -63,6 +60,12 @@ class SelectedProduct extends React.Component {
                     this.setState({ error: er.response.data });
                 else
                     this.setState({ error: er.messsage });
+                setTimeout(() => {
+                    if (er.response?.status === 403) {
+                        this.setState({ redirect: "/login" });
+                        this.props.pushUrl(this.props.location + this.props.location.search);
+                    }
+                }, 1500);
             })
             .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }
@@ -72,7 +75,7 @@ class SelectedProduct extends React.Component {
         return (
             <>
                 <div className="col-12 col-md-10 offset-lg-1 col-lg-9">
-                    {this.state.error ? <span className="alert-danger m-2">{this.state.error}</span> : null}<br />
+                    {this.state.error ? <span className="text-danger m-2">{this.state.error}</span> : null}<br />
                     <img src={product.imgUrl} alt="Product" className="img-thumbnail" />
                     <div className="text-right">
                         {this.props.product.finalized ?

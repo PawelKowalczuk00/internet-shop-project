@@ -45,7 +45,8 @@ class Login extends React.Component {
                     route: "/account"
                 });
                 storage().setItem('x-auth-token', res.headers['x-auth-token']);
-                storage().setItem('id', res.headers['x-id']);
+                storage().setItem('id', res.data._id);
+                storage().setItem('saldo', res.data.saldo);
                 this.setState({ redirect: this.props.returnUrl || "/user" });
                 popUrl();
             })

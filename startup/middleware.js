@@ -12,7 +12,7 @@ export default (app) => {
     const origins = process.env.NODE_ENV === 'development' ? [/http:\/\/localhost:3000/, /http:\/\/localhost:5000/] : /https:\/\/internet-shop-project-pk2020.herokuapp.com/;
     app.use(cors({
         origin: origins, allowedHeaders: 'content-length, content-type, x-auth-token',
-        exposedHeaders: ['x-auth-token', 'x-id'], credentials: true
+        exposedHeaders: ['x-auth-token'], credentials: true
     }));
     app.options('*', cors());
     if (process.env.NODE_ENV == 'production') {

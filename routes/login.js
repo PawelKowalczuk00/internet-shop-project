@@ -17,8 +17,10 @@ route.post('/', async (req, res) => {
             const token = user.generateAuthToken();
             user.logHistory.push(Date.now());
             await user.save();
-            res.setHeader('x-id', user._id);
-            res.header('x-auth-token', token).send(`Hello ${user.name} ${user.surname}.`);
+            res.header('x-auth-token', token).send({
+                saldo: user.saldo,
+                _id: user._id
+            });
         }
         else
             res.status(401).send(`Incorrect password`);

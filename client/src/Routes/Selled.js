@@ -18,8 +18,7 @@ class Selled extends React.Component {
         if (this.state.redirect)
             return <Redirect to={{
                 pathname: `/product`,
-                search: `?id=${this.props.product._id}`,
-                state: {existingProduct: true}
+                search: `?id=${this.props.product._id}`
             }}/>
         return (
             <div className="text-center col-12 offset-md-2 col-md-8 offset-lg-3 col-lg-7">
