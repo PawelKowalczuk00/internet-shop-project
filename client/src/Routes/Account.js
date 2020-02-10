@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Loader from '../Components/LoaderComponent';
+import storage from '../Functions/userStorage';
 import { info } from '../Redux/actionCreators';
 import { account, getSingleProduct, transactions } from '../Functions/axios';
 
-//import './css/Account.css';
+import './css/Account.css';
 
 export class AccountMain extends React.Component {
     render() {
@@ -31,12 +32,12 @@ export class AccountMain extends React.Component {
                             <td>{(new Date(user.registerDate)).toLocaleDateString()}</td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="2">Log history: </th>
+                            <th scope="row" colSpan="2">Log history: </th>
                         </tr>
                         {user.logHistory?.map(day => {
                             return (
                                 <tr>
-                                    <td colspan="2">{(new Date(day)).toLocaleDateString()}</td>
+                                    <td colSpan="2">{(new Date(day)).toLocaleDateString()}</td>
                                 </tr>
                             );
                         })}
@@ -68,6 +69,7 @@ export class AccountOffers extends React.Component {
             <table className="table table-bordered table-primary table-hover">
                 <thead>
                     <tr>
+                        <th scope="col">Picture</th>
                         <th scope="col">Name</th>
                         <th scope="col">Date</th>
                     </tr>
@@ -76,6 +78,7 @@ export class AccountOffers extends React.Component {
                     {this.props.activeProducts.map(offer => {
                         return (
                             <tr data-id={offer._id} onClick={this.onRowClick}>
+                                <td><img src={`/prodImg/${product.imgUrl}`} alt="Product" /></td>
                                 <th scope="row" className="text-capitalize">{offer.name.join(" ")}</th>
                                 <td>{(new Date(offer.exposeDate)).toLocaleDateString()}</td>
                             </tr>
@@ -209,6 +212,15 @@ export class AccountLayout extends React.Component {
             return <AccountMain main={this.state.main} />
     }
 
+    logOut = () => {
+        storage().setItem('x-auth-token', "");
+        storage().setItem('id', "");
+        storage().setItem('saldo', "");
+        sessionStorage.clear();
+        this.props.info({ route: "/login" });
+        this.setState({redirect: "/user"});
+    }
+
     render() {
         if (this.state.redirect)
             return <Redirect to={this.state.redirect} />
@@ -218,6 +230,7 @@ export class AccountLayout extends React.Component {
                     <button onClick={() => this.setState({ subPage: "main" })} className="btn btn-primary text-wrap">My account</button>
                     <button onClick={() => this.setState({ subPage: "offers" })} className="btn btn-primary text-wrap">My offers</button>
                     <button onClick={() => this.setState({ subPage: "transactions" })} className="btn btn-primary text-wrap">Transaction history</button>
+                    <button className="btn btn-danger text-wrap ml-1" onClick={this.logOut}>Log out</button>
                 </div>
                 {this.state.error ? <h6 className="text-danger m-2">{this.state.error}</h6> : null}
                 {this.state.loader ? <Loader /> : this.renderView(this.state.subPage)}

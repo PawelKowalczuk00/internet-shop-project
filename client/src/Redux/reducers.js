@@ -22,7 +22,13 @@ const list = (productsList =
     return productsList;
 }
 
-const info = (info = { route: "/register" }, action) => {
+const userStatus = () => {
+        if (localStorage.getItem('id'))
+            return "/account";
+        return "/register";
+}
+
+const info = (info = { route: userStatus() }, action) => {
     if (action.type === "INFO")
         return action.payload;
     return info;

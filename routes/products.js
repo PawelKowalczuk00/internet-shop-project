@@ -2,7 +2,6 @@ import express from 'express';
 import joi from '@hapi/joi';
 
 import Product from '../dataBase/product.js';
-import logger from '../functions/logger.js';
 
 const route = express.Router();
 
@@ -23,7 +22,7 @@ route.post('/', async (req, res) => {
             .or([{ name: { $in: keywords } }, { description: { $in: keywords } }])
             .skip(page * range)
             .limit(range)
-            .select("name description price _id")
+            .select("name description price imgUrl _id")
             .sort(order + sort);
         howMany = await Product
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
@@ -35,14 +34,14 @@ route.post('/', async (req, res) => {
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
             .skip(page * range)
             .limit(range)
-            .select("name description price _id")
+            .select("name description price imgUrl _id")
             .sort(order + sort);
         howMany = await Product
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
             .countDocuments();
     }
     res.send({ productsList, howMany });
-});
+})
 
 route.get('/:id', async (req, res) => {
     const product = await Product.findById(req.params.id)
@@ -53,7 +52,7 @@ route.get('/:id', async (req, res) => {
         return res.send(product);
     else
         return res.send("Product not found.")
-});
+})
 
 const validateFilters = (filters) => {
     const schema = joi.object({

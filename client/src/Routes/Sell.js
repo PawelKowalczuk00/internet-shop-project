@@ -2,52 +2,71 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { pushUrl, selectProduct } from '../Redux/actionCreators';
+import { pushUrl } from '../Redux/actionCreators';
 import Loader from '../Components/LoaderComponent';
 import storage from '../Functions/userStorage';
 import { createOffer } from '../Functions/axios';
 
 import '../css/Register.css';
+import "../fontello/css/fontello.css";
 
 class Sell extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "", description: "", price: 0,
+            name: "", description: "", price: 0, picture: undefined,
             error: null, loader: false, redirect: false,
-            disabled: true
+            disabled: true, badPicture: false
         }
     }
 
     componentDidMount() {
         this.mounted = true;
+        this.createdOffer_id = undefined;
         if (!(storage().getItem('saldo')))
-            this.setState({ error: "You have to be logged in and verified to buy products" });
+            this.setState({ error: "You have to be logged in and verified to sell products" });
         else
-            this.setState({disabled: false})
+            this.setState({ disabled: false })
     }
 
     componentWillUnmount() {
         this.mounted = false;
     }
 
+    onPictureChange = (e) => {
+        const picture = e.target.files[0];
+        if (picture.size > 5 * 1000000)
+            return this.setState({ error: "Image is to big", badPicture: true });
+        if (!picture.type.includes('image'))
+            return this.setState({ error: "You have to select a 'png' or 'jpg' picture", badPicture: true });
+        return this.setState({ picture: e.target.files[0], badPicture: false, error: null });
+    }
+
+    onResetClick = (e) => {
+        e.preventDefault();
+        this.setState({ picture: undefined, badPicture: false, error: null });
+        e.currentTarget.previousElementSibling.value = "";
+    }
+
     onSellSubmit = (e) => {
         e.preventDefault();
         this.setState({ loader: true });
-        createOffer({
-            name: this.state.name.trim().split(" "),
-            description: this.state.description.trim().split(" "),
-            price: this.state.price
-        })
-            .then(res => {
+        const form = new FormData();
+        form.append('name', this.state.name.trim());
+        form.append('description', this.state.description.trim());
+        form.append('price', this.state.price);
+        if (this.state.picture)
+            form.append('picture', this.state.picture);
+        createOffer(form)
+            .then(async res => {
+                this.createdOffer_id = res.data;
                 this.setState({ redirect: "/selled" });
-                this.props.selectProduct(res.data);
             })
             .catch(er => {
                 console.log(er);
-                this.setState({ error: er.response?.data || er.message });
+                this.setState({ error: er.response?.data || er.statusText });
                 setTimeout(() => {
-                    if (er.response?.status === 403) {
+                    if (er.response?.status === 401) {
                         this.setState({ redirect: "/login" });
                         this.props.pushUrl("/sell");
                     }
@@ -57,7 +76,12 @@ class Sell extends React.Component {
     }
 
     render() {
-        if (this.state.redirect)
+        if (this.state.redirect === "/selled")
+            return <Redirect to={{
+                pathname: `/selled`,
+                search: "id="+this.createdOffer_id
+            }}/>
+        else if (this.state.redirect)
             return <Redirect to={this.state.redirect} />
         else if (this.state.loader)
             return <Loader />
@@ -86,12 +110,17 @@ class Sell extends React.Component {
                         onChange={(e) => this.setState({ price: e.target.value })}
                     />
                 </div>
-                <button type="submit" className="btn-block btn-success font-weight-bolder" disabled={this.state.disabled}>Create an offer</button>
+                <div className="form-group file">
+                    <label htmlFor="picture">Picture: </label><br />
+                    <input onChange={this.onPictureChange} type="file" className="form-control" id="picture" />
+                    <button type="button" onClick={this.onResetClick} className="reset"><i className="icon-cancel text-white" /></button>
+                </div>
+                <button type="submit" className="btn-block btn-success font-weight-bolder" disabled={this.state.disabled || this.state.badPicture}>Create an offer</button>
             </form>
         );
     }
 }
 
 export default connect(null, {
-    pushUrl, selectProduct
+    pushUrl
 })(Sell);

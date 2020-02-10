@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import storage from '../Functions/userStorage';
-
 import '../css/Navbar.css';
 import "../fontello/css/fontello.css";
 
@@ -25,12 +23,6 @@ class Navbar extends React.Component {
     onNavSellClick = (e) => {
         this.navBuy.current.classList.remove("active");
         this.navSell.current.classList.add("active");
-    }
-
-    userStatus = () => {
-        if (storage.getItem('email'))
-            return "/account";
-        return "/login";
     }
 
     render() {

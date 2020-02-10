@@ -31,14 +31,9 @@ export const compareProducts = (ids) => {
     }
 }
 
-export const selectProduct = (idOrProduct) => {
-    if (typeof idOrProduct === 'object')
-        return {
-            type: "SELECT",
-            payload: idOrProduct
-        };
+export const selectProduct = (id) => {
     return async dispatch => {
-        getSingleProduct(idOrProduct)
+        getSingleProduct(id)
             .then(res => {
                 dispatch({
                     type: "SELECT",

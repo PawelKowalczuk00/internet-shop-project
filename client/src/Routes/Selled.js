@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 class Selled extends React.Component {
     constructor(props) {
@@ -18,7 +17,7 @@ class Selled extends React.Component {
         if (this.state.redirect)
             return <Redirect to={{
                 pathname: `/product`,
-                search: `?id=${this.props.product._id}`
+                search: this.props.location.search
             }}/>
         return (
             <div className="text-center col-12 offset-md-2 col-md-8 offset-lg-3 col-lg-7">
@@ -29,10 +28,4 @@ class Selled extends React.Component {
     }
 }
 
-const mapStoreToProps = (store) => {
-    return {
-        product: store.selectOne,
-    };
-}
-
-export default connect(mapStoreToProps)(Selled);
+export default Selled;

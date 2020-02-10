@@ -41,9 +41,10 @@ const productSchema = new mongoose.Schema({
 
 export const validateBody = (body) => {
     const schema = joi.object({
-        name: joi.array().min(1).max(60).required(),
-        description: joi.array().max(1000),
-        price: joi.number().min(0).max(999999).required(),
+        name: joi.string().min(2).max(60),
+        description: joi.string().allow('').max(1000),
+        price: joi.number().min(0.01).max(999999).required(),
+        picture: joi.allow(),
         imgUrl: joi.forbidden(),
         seller: joi.forbidden(),
         exposeDate: joi.forbidden(),

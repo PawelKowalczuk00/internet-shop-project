@@ -15,19 +15,19 @@ class SelectedProduct extends React.Component {
         super(props);
         this.state = {
             redirect: false, loader: true, error: null,
-            disabled: true
+            disabled: true,
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.mounted = true;
         const { id } = queryString.parse(this.props.location.search);
-        this.props.selectProduct(id)
+        await this.props.selectProduct(id)
             .then(() => {
                 if (!(storage().getItem('saldo')))
                     this.setState({ error: "You have to be logged in and verified to buy products" });
                 else if (storage().getItem('saldo') < this.props.product.price)
-                    this.setState({ error: "You don't have enough money" });
+                    this.setState({ error: "You don't have enough money" })
                 else
                     this.setState({ disabled: false });
             })
@@ -50,7 +50,6 @@ class SelectedProduct extends React.Component {
     }
 
     buy = () => {
-        console.log('this.props.location + this.props.location.search :', this.props.location + this.props.location.search);
         this.setState({ error: null, loader: true });
         buy(this.props.product._id)
             .then(res => this.setState({ redirect: "/bought" }))
@@ -61,7 +60,7 @@ class SelectedProduct extends React.Component {
                 else
                     this.setState({ error: er.messsage });
                 setTimeout(() => {
-                    if (er.response?.status === 403) {
+                    if (er.response?.status === 401) {
                         this.setState({ redirect: "/login" });
                         this.props.pushUrl(this.props.location + this.props.location.search);
                     }
@@ -75,8 +74,8 @@ class SelectedProduct extends React.Component {
         return (
             <>
                 <div className="col-12 col-md-10 offset-lg-1 col-lg-9">
-                    {this.state.error ? <span className="text-danger m-2">{this.state.error}</span> : null}<br />
-                    <img src={product.imgUrl} alt="Product" className="img-thumbnail" />
+                    <img src={`/prodImg/${product.imgUrl}`} alt="Product" />
+                    <div>{this.state.error ? <span className="text-danger m-2">{this.state.error}</span> : null}</div>
                     <div className="text-right">
                         {this.props.product.finalized ?
                             <h2 className="text-danger text-muted">This product has been sold</h2>

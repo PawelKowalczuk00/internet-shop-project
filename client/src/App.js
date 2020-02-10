@@ -44,7 +44,7 @@ const App = () => {
               <Route path="/account" exact component={AccountLayout} />
               <Route path="/comparision" exact component={Comparision} />
               <Route path="/sell" exact component={Sell} />
-              <Route path="/selled" exact component={Selled} />
+              <Route path="/selled" component={Selled} />
               <Route path="/bought" exact component={Bought} />
             <aside className="d-none d-md-block col-md-2 text-right">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mi lectus, hendrerit id nunc sit amet, malesuada suscipit sapien. Sed enim sapien, commodo vitae dignissim sit amet, iaculis ut justo. Aliquam scelerisque leo semper, commodo enim sit amet, cursus massa. Mauris vitae mollis nunc, sit amet interdum odio. Mauris finibus.

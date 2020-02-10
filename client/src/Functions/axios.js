@@ -49,8 +49,8 @@ export const transactions = async () => {
     });
 }
 
-export const createOffer = async (body = {}) => {
-    return base.post('/sell', JSON.stringify(body), {
+export const createOffer = async (body) => {
+    return base.post('/sell', body, {
         headers: {
             "x-auth-token": userStorage().getItem('x-auth-token')
         }

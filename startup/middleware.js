@@ -14,11 +14,11 @@ export default (app) => {
         origin: origins, allowedHeaders: 'content-length, content-type, x-auth-token',
         exposedHeaders: ['x-auth-token'], credentials: true
     }));
+    app.use(express.static('./client/build'));
     app.options('*', cors());
     if (process.env.NODE_ENV == 'production') {
         helmet.referrerPolicy({ policy: 'origin' });
         app.use(helmet());
-        app.use(express.static('./client/build'));
         logger.debug('Using production.');
     }
     else {

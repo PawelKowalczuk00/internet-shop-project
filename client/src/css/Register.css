@@ -14,3 +14,17 @@ div.text-wrap {
 .btn-success {
     height: 3rem;
 }
+
+button.reset {
+    display: inline-block;
+    width: 8%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: red;
+}
+
+input[type="file"] {
+    width: 92%;
+    display: inline-block;
+}
