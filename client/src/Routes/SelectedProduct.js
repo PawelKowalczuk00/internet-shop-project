@@ -5,7 +5,7 @@ import queryString from 'query-string';
 
 import Loader from '../Components/LoaderComponent';
 import { selectProduct } from '../Redux/actionCreators';
-import { buy } from '../Functions/axios';
+import { buy, deleteOffer } from '../Functions/axios';
 import storage from '../Functions/userStorage';
 
 import '../css/SelectedProduct.css';
@@ -69,6 +69,33 @@ class SelectedProduct extends React.Component {
             .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }
 
+    delete = () => {
+        this.setState({ error: null, loader: true });
+        deleteOffer(this.props.product._id)
+            .then(() => this.setState({ redirect: "/deleted" }))
+            .catch(er => {
+                console.log('er :', er);
+                if (er.response)
+                    this.setState({ error: er.response.data });
+                else
+                    this.setState({ error: er.messsage });
+            })
+            .finally(() => this.mounted ? this.setState({ loader: false }) : null);
+    }
+
+    renderButton = () => {
+        if (this.props.product.finalized)
+            return <h2 className="text-danger text-muted">This product has been sold</h2>
+        if (this.props.product.seller?.email === storage().getItem('email'))
+            return (
+                <>
+                    <button className="btn btn-danger m-1 d-inline-block" onClick={this.delete} disabled={this.state.disabled}>Delete offer</button>
+                    <button className="btn btn-primary mr-4 d-inline-block" onClick={e => this.setState({ redirect: "/edit/"+this.props.product._id })} disabled={this.state.disabled}>Edit offer</button>
+                </>
+            );
+        return <button className="btn btn-success m-1" onClick={this.buy} disabled={this.state.disabled}>Buy</button>
+    }
+
     renderDetails() {
         const { product } = this.props;
         return (
@@ -77,11 +104,7 @@ class SelectedProduct extends React.Component {
                     <img src={`/prodImg/${product.imgUrl}`} alt="Product" className="img-full" />
                     <div>{this.state.error ? <span className="text-danger m-2">{this.state.error}</span> : null}</div>
                     <div className="text-right">
-                        {this.props.product.finalized ?
-                            <h2 className="text-danger text-muted">This product has been sold</h2>
-                            :
-                            <button className="btn btn-success m-1" onClick={this.buy} disabled={this.state.disabled}>Buy</button>
-                        }
+                        {this.renderButton()}
                     </div>
                     <table className="table table-bordered table-striped table-danger">
                         <tbody>

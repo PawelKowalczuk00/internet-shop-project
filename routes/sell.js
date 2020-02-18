@@ -41,26 +41,29 @@ route.delete('/delete/:id', async (req, res) => {
         if (product.finalized)
             return res.status(405).send("You can't change products that have been sold.");
         //deleting product and updating users active products
-        sendProdDelEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
+        await User.findByIdAndUpdate(req.user._id, { $pull: { activeProducts: product._id } });
         await product.remove();
-        await User.findByIdAndUpdate(req.user._id, { $pull: { activeProducts: deletedProduct._id } });
+        sendProdDelEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
         return res.send(product);
     }
     else
         return res.status(404).send("Product not found, therefore it could not be deleted.");
 })
 
-route.put('/edit/:id', async (req, res) => {
+route.put('/edit/:id', upload.single('picture'), async (req, res) => {
     const { error, value } = validateBody(req.body);
     //1 validation checking if req.body syntax and value range is correct
     if (error)
         return res.status(400).send(error.message);
     //2 validation checking if product exists
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate("seller");
     if (product) {
         //3 validation checking if product isnt finalazed
         if (product.finalized)
             return res.status(405).send("You can't change products that have been sold.");
+        //4 validation checking if product's seller is the person who requested edit'
+        if (product.seller._id+" " !== req.user._id+" ")
+            return res.status(405).send("You can't change products you don't own.");
         //Updating product
         product.name = value.name;
         product.description = value.description;

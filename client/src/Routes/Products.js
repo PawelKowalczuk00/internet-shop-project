@@ -35,6 +35,7 @@ class Products extends React.Component {
         this.props.generateProductsList(this.state.filters, this.state.display)
             .catch(er => {
                 console.log('er :', er);
+                setTimeout(() => this.searchProducts(), 5000);
                 if (er.response)
                     this.setState({ error: er.response.data });
                 else
@@ -45,7 +46,7 @@ class Products extends React.Component {
 
     validateNumber = (number, field, oppositeField, min, max) => {
         if (/^[0-9]*$/.test(number))
-            if (Number(number) >= min && Number(number) <= max)
+            if (Number(number) >= min && Number(number) <= max) {
                 this.setState({
                     filters:
                     {
@@ -54,6 +55,8 @@ class Products extends React.Component {
                         keywords: this.state.filters.keywords
                     }
                 })
+                setTimeout(() => this.searchProducts(), 500);
+            }
     }
 
     onSearchChange = text => {
@@ -75,6 +78,7 @@ class Products extends React.Component {
                 order: selectedOption.value,
             }
         })
+        setTimeout(() => this.searchProducts(), 500);
     }
 
     onSortChange = e => {
@@ -86,11 +90,12 @@ class Products extends React.Component {
                 order: this.state.display.order
             }
         })
+        setTimeout(() => this.searchProducts(), 500);
     }
 
     onRangeChange = e => {
         const range = e.target.value;
-        if (range > 0)
+        if (range > 0) {
             this.setState({
                 display: {
                     page: this.state.display.page,
@@ -99,6 +104,8 @@ class Products extends React.Component {
                     order: this.state.display.order
                 }
             })
+            setTimeout(() => this.searchProducts(), 500);
+        }
     }
 
     onPrevClick = e => {

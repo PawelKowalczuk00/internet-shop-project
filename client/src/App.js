@@ -16,10 +16,11 @@ import Register from './Routes/Register';
 import Registered from './Routes/Registered';
 import Verified from './Routes/Verified';
 import AccountLayout from './Routes/Account';
-import Comparision from './Routes/Comparision';
 import Sell from './Routes/Sell';
+import Edit from './Routes/Edit';
 import Selled from './Routes/Selled';
 import Bought from './Routes/Bought';
+import Deleted from './Routes/Deleted';
 
 
 import './css/App.css';
@@ -42,10 +43,11 @@ const App = () => {
               <Route path="/registered" exact component={Registered} />
               <Route path="/verified" exact component={Verified} />
               <Route path="/account" exact component={AccountLayout} />
-              <Route path="/comparision" exact component={Comparision} />
               <Route path="/sell" exact component={Sell} />
+              <Route path="/edit" component={Edit} />
               <Route path="/selled" component={Selled} />
               <Route path="/bought" exact component={Bought} />
+              <Route path="/deleted" exact component={Deleted} />
             <aside className="d-none d-md-block col-md-2 text-right">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mi lectus, hendrerit id nunc sit amet, malesuada suscipit sapien. Sed enim sapien, commodo vitae dignissim sit amet, iaculis ut justo. Aliquam scelerisque leo semper, commodo enim sit amet, cursus massa. Mauris vitae mollis nunc, sit amet interdum odio. Mauris finibus.
               Reklama

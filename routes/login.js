@@ -19,7 +19,8 @@ route.post('/', async (req, res) => {
             await user.save();
             res.header('x-auth-token', token).send({
                 saldo: user.saldo,
-                _id: user._id
+                _id: user._id,
+                email: user.email
             });
         }
         else
