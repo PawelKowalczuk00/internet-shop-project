@@ -5,12 +5,14 @@ import Product from '../dataBase/product.js';
 
 const route = express.Router();
 
-route.post('/', async (req, res) => {
-    const { error, value } = validateFilters(req.body);
+route.post('/', async (req, res) => {  
+    const { value } = validateFilters(req.body);
     const minPrice = value.minPrice || 0;
     const maxPrice = value.maxPrice || 999999;
-    const page = req.query.page || 0;
-    const range = req.query.range || 9;
+    let page = req.query.page || 0;
+    page = Number(page);
+    let range = req.query.range || 9;
+    range = Number(range);
     const sort = req.query.sort || "name";
     const order = req.query.order || ""; //""=>asc, "-"=>desc
     let { keywords } = value;

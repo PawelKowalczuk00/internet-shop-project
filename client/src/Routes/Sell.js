@@ -52,8 +52,8 @@ class Sell extends React.Component {
         e.preventDefault();
         this.setState({ loader: true });
         const form = new FormData();
-        form.append('name', this.state.name.trim());
-        form.append('description', this.state.description.trim());
+        form.append('name', this.state.name.trim().toLowerCase());
+        form.append('description', this.state.description.trim().toLowerCase());
         form.append('price', this.state.price);
         if (this.state.picture)
             form.append('picture', this.state.picture);

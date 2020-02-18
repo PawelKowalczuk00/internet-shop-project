@@ -20,6 +20,13 @@ export const popUrl = () => {
     }
 }
 
+export const hideSearchBar = (hide) => {
+    return {
+        type: "HIDE",
+        payload: hide
+    }
+}
+
 export const compareProducts = (ids) => {
     let products = [];
     return dispatch => {
@@ -43,9 +50,9 @@ export const selectProduct = (id) => {
     }
 }
 
-export const generateProductsList = (body, filters) => {
+export const generateProductsList = (filters, display) => {
     return async dispatch => {
-        getProducts(body, filters)
+        getProducts(filters, display)
             .then(res => {
                 dispatch({
                     type: "LIST",

@@ -20,8 +20,8 @@ route.post('/', upload.single('picture'), async (req, res) => {
     if (req.file)
         imgPath = req.file.filename;
     const product = new Product({
-        name: value.name.split(" "),
-        description: value.description.split(" "),
+        name: value.name.toLowerCase().split(" "),
+        description: value.description.toLowerCase().split(" "),
         price: Number(value.price),
         seller: req.user._id,
         imgUrl: imgPath

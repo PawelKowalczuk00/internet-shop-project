@@ -41,21 +41,6 @@ a:hover {
     overflow: hidden;
 }
 
-.filters {
-    
-}
-
-.searchbar > input {
-    width: 83%;
-}
-.searchbar > button {
-    width: 12%;
-}
-
-.pagination {
-    width: 100%;
-}
-
-img {
-    max-width: 50%;
+.prod-picture {
+    height: 40%;
 }

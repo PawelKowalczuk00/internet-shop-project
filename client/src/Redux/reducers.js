@@ -42,4 +42,10 @@ const urlQueue = (urlQueue = false, action) => {
     return urlQueue;
 }
 
-export default combineReducers({ selectOne, compare, list, info, urlQueue })
+const hideSearchBar = (hideSearchBar = false, action) => {
+    if (action.type === "HIDE")
+        return action.payload;
+    return hideSearchBar;
+}
+
+export default combineReducers({ selectOne, compare, list, info, urlQueue, hideSearchBar })

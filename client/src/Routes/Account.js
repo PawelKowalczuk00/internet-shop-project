@@ -78,7 +78,7 @@ export class AccountOffers extends React.Component {
                     {this.props.activeProducts.map(offer => {
                         return (
                             <tr data-id={offer._id} onClick={this.onRowClick}>
-                                <td><img src={`/prodImg/${offer.imgUrl}`} alt="Product" /></td>
+                                <td className="float-left"><img src={`/prodImg/${offer.imgUrl}`} alt="Product" /></td>
                                 <th scope="row" className="text-capitalize">{offer.name.join(" ")}</th>
                                 <td>{(new Date(offer.exposeDate)).toLocaleDateString()}</td>
                             </tr>
@@ -187,7 +187,7 @@ export class AccountLayout extends React.Component {
             this.state.main.activeProducts.sort();
             let activeOffers = [];
             for (let id of this.state.main.activeProducts) {
-                activeOffers.push((await getSingleProduct(id)).data);
+                activeOffers.unshift((await getSingleProduct(id)).data);
             }
             this.setState({ activeOffers });
         }

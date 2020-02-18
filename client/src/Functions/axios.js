@@ -9,13 +9,13 @@ const base = axios.create({
     }
 });
 
-export const getProducts = async (body = {}, filters) => {
-    return base.post('/products', JSON.stringify(body), {
+export const getProducts = async (filters = {}, display) => {
+    return base.post('/products', JSON.stringify(filters), {
         params: {
-            "page": filters?.page,
-            "range": filters?.range,
-            "sort": filters?.sort,
-            "order": filters?.order
+            "page": display?.page,
+            "range": display?.range,
+            "sort": display?.sort,
+            "order": display?.order
         }
     });
 }

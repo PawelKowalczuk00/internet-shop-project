@@ -9,14 +9,14 @@ import Transaction from '../dataBase/transaction.js'
 const route = express.Router();
 
 route.get('/:id', async (req, res) => {
-    //1 validation checking if user is verified
-    if (!req.user.veryfied)
-        return res.status(403).send("Your account has to be veryfied to be able to buy products.");
-    //2 validation checking if product exists
+    //1 validation checking if product exists
     const productId = req.params.id;
     const product = await Product.findById(productId);
     if (product && !product.finalized) {
         const buyer = await User.findById(req.user._id);
+        //2 validation checking if buyer is verified
+        if (!buyer.veryfied)
+            return res.status(403).send("Your account has to be veryfied to be able to buy products.");
         const seller = await User.findById(product.seller);
         //3 validation checking if buyer isnt the seller
         if (buyer.equals(seller))
@@ -44,14 +44,6 @@ route.get('/:id', async (req, res) => {
         // 3) ----------------------------
         seller.saldo += product.price;
         await User.findByIdAndUpdate(seller._id, { $pull: { activeProducts: product._id } });
-        
-        /*seller.activeProducts = seller.activeProducts.filter(prodId => {
-            console.log('prodId :', prodId);
-            console.log('product._id :', product._id);
-            console.log('prodId !== product._id :', prodId !== product._id);
-            console.log('prodId !== product._id :', prodId != product._id);
-            return prodId+"" !== product._id+"";
-        });*/
         seller.transactionHistory.push(transaction._id);
         await seller.save();
         sendSold(seller.email, `${seller.name} ${seller.surname}`, product);

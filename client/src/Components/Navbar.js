@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import '../css/Navbar.css';
 import "../fontello/css/fontello.css";
@@ -23,6 +24,23 @@ class Navbar extends React.Component {
     onNavSellClick = (e) => {
         this.navBuy.current.classList.remove("active");
         this.navSell.current.classList.add("active");
+    }
+
+    renderSearchBar = () => {
+        if (!this.props.hide)
+            return (
+                <form className="d-none d-md-block mb-3 mb-md-1">
+                    <input type="text" placeholder="Search for product" value={this.state.keywords}
+                        onChange={(e) => this.setState({ keywords: e.target.value })} />
+                    <Link to={{
+                        pathname: "/products",
+                        //sendings to /products will be avaiable at props.location.state.keywords
+                        state: { keywords: this.state.keywords.trim().split(" ") }
+                    }}>
+                        <button onClick={this.onNavSearchClick}><i className="icon-search" /></button>
+                    </Link>
+                </form>
+            );
     }
 
     render() {
@@ -49,19 +67,9 @@ class Navbar extends React.Component {
                             </Link>
                         </li>
                     </ul>
-                    <form className="d-none d-md-block mb-3 mb-md-1">
-                        <input type="text" placeholder="Search for product" value={this.state.keywords}
-                            onChange={(e) => this.setState({ keywords: e.target.value })} />
-                        <Link to={{
-                            pathname: "/products",
-                            //sendings to /products will be avaiable at props.location.state.keywords
-                            state: { keywords: this.state.keywords.trim().split(" ") }
-                        }}>
-                            <button  onClick={this.onNavSearchClick}><i className="icon-search" /></button>
-                        </Link>
-                    </form>
+                    {this.renderSearchBar()}
                 </div>
-                <div className="mx-2 ml-md-3 mr-lg-5 text-center"  onClick={this.onNavOtherClick}>
+                <div className="mx-2 ml-md-3 mr-lg-5 text-center" onClick={this.onNavOtherClick}>
                     <div className="d-inline-block mx-1 mx-lg-3 thumbnails">
                         <Link to="/user">
                             <i className="icon-adult text-white" />
@@ -73,4 +81,10 @@ class Navbar extends React.Component {
     }
 }
 
-export default Navbar;
+const mapStoreToProps = (store) => {
+    return {
+        hide: store.hideSearchBar
+    };
+}
+
+export default connect(mapStoreToProps)(Navbar);
