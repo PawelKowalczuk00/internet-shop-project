@@ -21,7 +21,7 @@ class Edit extends React.Component {
 
     componentDidMount() {
         this.mounted = true;
-        if (!(storage().getItem('saldo')) || this.props.product.seller?.email !== storage().getItem('email'))
+        if (!(storage().getItem('email')) || this.props.product.seller?.email !== storage().getItem('email'))
             this.setState({ error: "You have to be logged in and verified to edit products" });
         else
             this.setState({ disabled: false })

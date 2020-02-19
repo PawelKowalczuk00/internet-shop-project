@@ -50,6 +50,7 @@ route.get('/:id', async (req, res) => {
         // 4) ----------------------------
         buyer.saldo -= product.price;
         buyer.transactionHistory.push(transaction._id);
+        await buyer.save();
         sendBought(buyer.email, `${buyer.name} ${buyer.surname}`, product);
         //---------------------------------
         return res.send({ transaction, product });

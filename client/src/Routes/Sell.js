@@ -23,7 +23,7 @@ class Sell extends React.Component {
     componentDidMount() {
         this.mounted = true;
         this.createdOffer_id = undefined;
-        if (!(storage().getItem('saldo')))
+        if (!(storage().getItem('email')))
             this.setState({ error: "You have to be logged in and verified to sell products" });
         else
             this.setState({ disabled: false })

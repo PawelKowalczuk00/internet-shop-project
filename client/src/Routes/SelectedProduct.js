@@ -24,10 +24,8 @@ class SelectedProduct extends React.Component {
         const { id } = queryString.parse(this.props.location.search);
         await this.props.selectProduct(id)
             .then(() => {
-                if (!(storage().getItem('saldo')))
+                if (!(storage().getItem('email')))
                     this.setState({ error: "You have to be logged in and verified to buy products" });
-                else if (storage().getItem('saldo') < this.props.product.price && this.props.product.seller?.email !== storage().getItem('email'))
-                    this.setState({ error: "You don't have enough money" })
                 else
                     this.setState({ disabled: false });
             })

@@ -215,7 +215,6 @@ export class AccountLayout extends React.Component {
     logOut = () => {
         storage().setItem('x-auth-token', "");
         storage().setItem('id', "");
-        storage().setItem('saldo', "");
         storage().setItem('email', "");
         sessionStorage.clear();
         this.props.info({ route: "/login" });
