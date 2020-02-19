@@ -1,0 +1,36 @@
+.bracket {
+    border: 2px solid grey;
+    width: 100%;
+}
+
+h5 {
+    font-weight: bolder;
+    font-size: 28px;
+    padding-right: 20px;
+}
+
+img {
+    width: 200px !important;
+    height: auto !important;
+}
+
+a {
+    font-weight: bolder;
+    color: rgb(72, 72, 117) !important;
+}
+
+.node {
+    background-color: rgb(75, 165, 75);
+}
+
+.react {
+    background-color: rgb(113, 192, 188);
+}
+
+.heroku {
+    background-color: rgb(184, 98, 184);
+}
+
+.git {
+    background-color: rgba(0, 0, 0, 0.233);
+}

@@ -26,7 +26,7 @@ class SelectedProduct extends React.Component {
             .then(() => {
                 if (!(storage().getItem('saldo')))
                     this.setState({ error: "You have to be logged in and verified to buy products" });
-                else if (storage().getItem('saldo') < this.props.product.price)
+                else if (storage().getItem('saldo') < this.props.product.price && this.props.product.seller?.email !== storage().getItem('email'))
                     this.setState({ error: "You don't have enough money" })
                 else
                     this.setState({ disabled: false });
@@ -86,13 +86,15 @@ class SelectedProduct extends React.Component {
     renderButton = () => {
         if (this.props.product.finalized)
             return <h2 className="text-danger text-muted">This product has been sold</h2>
-        if (this.props.product.seller?.email === storage().getItem('email'))
+        if (this.props.product.seller?.email === storage().getItem('email')) {
+            this.setState({ disabled: false });
             return (
                 <>
                     <button className="btn btn-danger m-1 d-inline-block" onClick={this.delete} disabled={this.state.disabled}>Delete offer</button>
                     <button className="btn btn-primary mr-4 d-inline-block" onClick={e => this.setState({ redirect: "/edit/"+this.props.product._id })} disabled={this.state.disabled}>Edit offer</button>
                 </>
             );
+        }
         return <button className="btn btn-success m-1" onClick={this.buy} disabled={this.state.disabled}>Buy</button>
     }
 

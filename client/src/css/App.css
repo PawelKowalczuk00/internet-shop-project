@@ -1,9 +1,13 @@
+body {
+    background-color: rgb(250, 203, 203);
+}
+
 div.row {
     position: relative;
 }
 
 aside {
-    right: 0;
+    min-height: 100vh;
 }
 
 footer {
