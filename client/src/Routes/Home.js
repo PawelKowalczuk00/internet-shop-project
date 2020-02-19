@@ -22,7 +22,7 @@ class Home extends React.Component {
                     <h5>Server:</h5>
                     <ul className="ml-3">
                         <li>Routing using <a target="_blank" href="https://www.npmjs.com/package/express">Express</a></li>
-                        <li>Futuristic version 13.x with ES6 import/export syntax</li>
+                        <li>Futuristic node version 13.6 with ES6 import/export syntax</li>
                         <li>CORS allowing requests only from app client</li>
                         <li>Error routing and logging into file</li>
                         <li><a target="_blank" href="https://jwt.io/">JSON web token</a> authentication and authorisation</li>
