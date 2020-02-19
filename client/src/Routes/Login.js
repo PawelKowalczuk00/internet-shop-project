@@ -77,6 +77,7 @@ class Login extends React.Component {
             return <Loader />
         return (
             <>
+            <h1>Login</h1>
                 <form onSubmit={this.onLoginSubmit} className="col-12 col-md-7 offset-lg-1 col-lg-6">
                     {this.state.error ? <span className="alert-danger m-2">{this.state.error}</span> : null}
                     <div className="form-group">

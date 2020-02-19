@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import '../css/Home.css';
 import nodeLogo from '../images/node_logo.png';
@@ -10,9 +11,10 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div className="row">
+            <div className="row ml-sm-2 ml-md-4">
                 <header className="col-12 offset-md-2 col-md-8">
                     <h1 className="text-center">Welcome to my demo page!</h1>
+                    <Link to="/products"><h2 className="text-center alert-danger">Start shopping</h2></Link>
                     <h3 className="mt-4 mb-2 m-0 ml-sm-5 ml-md-0">This webpage uses this technological solutions and tools:</h3>
                 </header>
                 <div className="col-12 offset-md-2 col-md-10 col-lg-4 bracket node">

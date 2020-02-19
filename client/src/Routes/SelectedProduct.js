@@ -87,7 +87,6 @@ class SelectedProduct extends React.Component {
         if (this.props.product.finalized)
             return <h2 className="text-danger text-muted">This product has been sold</h2>
         if (this.props.product.seller?.email === storage().getItem('email')) {
-            this.setState({ disabled: false });
             return (
                 <>
                     <button className="btn btn-danger m-1 d-inline-block" onClick={this.delete} disabled={this.state.disabled}>Delete offer</button>

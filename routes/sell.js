@@ -10,7 +10,8 @@ const route = express.Router();
 
 route.post('/', upload.single('picture'), async (req, res) => {
     //1 validation checking if user is verified
-    if (!req.user.veryfied)
+    const user = await User.findById(req.user._id).select('veryfied');
+    if (!user.veryfied)
         return res.status(403).send("Your account has to be veryfied to be able to sell products.");
     const { error, value } = validateBody(req.body);
     //2 validation checking if req.body syntax and value range are correct
@@ -24,7 +25,7 @@ route.post('/', upload.single('picture'), async (req, res) => {
         name: value.name.toLowerCase().split(" "),
         description: value.description.toLowerCase().split(" "),
         price: Number(value.price),
-        seller: req.user._id,
+        seller: user._id,
         imgUrl: imgPath
     });
     await product.save();
@@ -41,6 +42,9 @@ route.delete('/delete/:id', async (req, res) => {
         //2 validation checking if product isnt finalazed
         if (product.finalized)
             return res.status(405).send("You can't change products that have been sold.");
+        //3 validation checking if product's seller is the person who requested delete'
+        if (product.seller._id + " " !== req.user._id + " ")
+            return res.status(405).send("You can't change products you don't own.");
         //deleting product and updating users active products
         await User.findByIdAndUpdate(req.user._id, { $pull: { activeProducts: product._id } });
         await product.remove();
