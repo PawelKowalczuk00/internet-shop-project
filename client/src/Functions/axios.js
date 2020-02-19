@@ -2,8 +2,8 @@ import axios from 'axios';
 import userStorage from "./userStorage";
 
 const base = axios.create({
-    //baseURL: "https://internet-shop-project-pk2020.herokuapp.com/api",
-    baseURL: "http://localhost:5000/api",
+    baseURL: "https://internet-shop-project-pk2020.herokuapp.com/api",
+    //baseURL: "http://localhost:5000/api",
     headers: {
         "Content-Type": 'application/json'
     }
@@ -51,7 +51,8 @@ export const transactions = async () => {
 export const createOffer = async (body) => {
     return base.post('/sell', body, {
         headers: {
-            "x-auth-token": userStorage().getItem('x-auth-token')
+            "x-auth-token": userStorage().getItem('x-auth-token'),
+            'Content-Type': 'multipart/form-data'
         }
     });
 }
@@ -59,7 +60,8 @@ export const createOffer = async (body) => {
 export const editOffer = async (body, id) => {
     return base.put(`/sell/edit/${id}`, body, {
         headers: {
-            "x-auth-token": userStorage().getItem('x-auth-token')
+            "x-auth-token": userStorage().getItem('x-auth-token'),
+            'Content-Type': 'multipart/form-data'
         }
     });
 }

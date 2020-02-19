@@ -1,6 +1,7 @@
 import express from 'express';
-import upload from '../functions/multer.js';
+import fs from 'fs';
 
+import upload from '../functions/multer.js';
 import { sendProdPostEmail, sendProdPutEmail, sendProdDelEmail } from '../functions/emails.js';
 import Product, { validateBody } from '../dataBase/product.js';
 import User from '../dataBase/user.js';
@@ -43,6 +44,9 @@ route.delete('/delete/:id', async (req, res) => {
         //deleting product and updating users active products
         await User.findByIdAndUpdate(req.user._id, { $pull: { activeProducts: product._id } });
         await product.remove();
+        fs.unlink(`client/build/prodImg/${product.imgUrl}`, err => {
+            console.log('Unlinking process:', err);
+        })
         sendProdDelEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
         return res.send(product);
     }
@@ -62,12 +66,19 @@ route.put('/edit/:id', upload.single('picture'), async (req, res) => {
         if (product.finalized)
             return res.status(405).send("You can't change products that have been sold.");
         //4 validation checking if product's seller is the person who requested edit'
-        if (product.seller._id+" " !== req.user._id+" ")
+        if (product.seller._id + " " !== req.user._id + " ")
             return res.status(405).send("You can't change products you don't own.");
         //Updating product
         product.name = value.name;
         product.description = value.description;
         product.price = value.price;
+        if (req.file)
+            fs.unlink(`client/build/prodImg/${product.imgUrl}`, err => {
+                console.log('Picture updating process:', err);
+                let imgPath = "";
+                imgPath = req.file.filename;
+                product.imgUrl = imgPath;
+            });
         await product.save();
         sendProdPutEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
         return res.send(product);

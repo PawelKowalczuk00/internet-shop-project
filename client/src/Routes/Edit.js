@@ -13,7 +13,7 @@ class Edit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: this.props.product.name.join(" "), description: this.props.product.description.join(" "), price: this.props.product.price, picture: this.props.product.picture,
+            name: this.props.product.name.join(" "), description: this.props.product.description.join(" "), price: this.props.product.price,
             error: null, loader: false, redirect: false,
             disabled: false, badPicture: false
         }
@@ -70,42 +70,46 @@ class Edit extends React.Component {
         if (this.state.redirect === "/edited")
             return <Redirect to={{
                 pathname: `/product`,
-                search: "id="+this.props.product._id
-            }}/>
+                search: "id=" + this.props.product._id
+            }} />
         else if (this.state.loader)
             return <Loader />
         return (
-            <form onSubmit={this.onEditSubmit} className="col-12 col-md-10 offset-lg-1 col-lg-9">
-                <span className="text-danger">{this.state.error}</span>
-                <h1>Edit existing offer</h1>
-                <div className="form-group">
-                    <label htmlFor="name">Name: </label>
-                    <input type="text" className="form-control text-capitalize" id="name" placeholder="name"
-                        value={this.state.name}
-                        onChange={(e) => this.setState({ name: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="description">Description: </label>
-                    <input type="text" className="form-control text-capitalize" id="description" placeholder="description"
-                        value={this.state.description}
-                        onChange={(e) => this.setState({ description: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="price">Price: </label>
-                    <input type="number" className="form-control" id="price" placeholder="price"
-                        value={this.state.price}
-                        onChange={(e) => this.setState({ price: e.target.value })}
-                    />
-                </div>
-                <div className="form-group file">
-                    <label htmlFor="picture">Picture: </label><br />
-                    <input onChange={this.onPictureChange} type="file" className="form-control" id="picture" />
-                    <button type="button" onClick={this.onResetClick} className="reset"><i className="icon-cancel text-white" /></button>
-                </div>
-                <button type="submit" className="btn-block btn-success font-weight-bolder" disabled={this.state.disabled || this.state.badPicture}>Edit an offer</button>
-            </form>
+            <div className="col-12 col-md-10 offset-lg-1 col-lg-9">
+                <form onSubmit={this.onEditSubmit}>
+                    <span className="text-danger">{this.state.error}</span>
+                    <h1>Edit existing offer</h1>
+                    <div className="form-group">
+                        <label htmlFor="name">Name: </label>
+                        <input type="text" className="form-control text-capitalize" id="name" placeholder="name"
+                            value={this.state.name}
+                            onChange={(e) => this.setState({ name: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="description">Description: </label>
+                        <input type="text" className="form-control text-capitalize" id="description" placeholder="description"
+                            value={this.state.description}
+                            onChange={(e) => this.setState({ description: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="price">Price: </label>
+                        <input type="number" className="form-control" id="price" placeholder="price"
+                            value={this.state.price}
+                            onChange={(e) => this.setState({ price: e.target.value })}
+                        />
+                    </div>
+                    <div className="form-group file">
+                        <label htmlFor="picture">Picture: (Leave Blank if you don't wish to change picture)</label><br />
+                        <input onChange={this.onPictureChange} type="file" className="form-control" id="picture" />
+                        <button type="button" onClick={this.onResetClick} className="reset"><i className="icon-cancel text-white" /></button>
+                    </div>
+                    <button type="submit" className="btn-block btn-success font-weight-bolder" disabled={this.state.disabled || this.state.badPicture}>Edit an offer</button>
+                </form> <br />
+                <p className="m-3 ml-5">Previous picture:</p>
+                <img className="ml-5" src={`https://internet-shop-project-pk2020.herokuapp.com/prodImg/${this.props.product.imgUrl}`} alt="Product" />
+            </div>
         );
     }
 }

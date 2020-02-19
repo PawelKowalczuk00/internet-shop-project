@@ -78,7 +78,7 @@ export class AccountOffers extends React.Component {
                     {this.props.activeProducts.map(offer => {
                         return (
                             <tr data-id={offer._id} onClick={this.onRowClick}>
-                                <td className="float-left"><img src={`/prodImg/${offer.imgUrl}`} alt="Product" /></td>
+                                <td className="float-left"><img src={`https://internet-shop-project-pk2020.herokuapp.com/prodImg/${offer.imgUrl}`} alt="Product"/></td>
                                 <th scope="row" className="text-capitalize">{offer.name?.join(" ")}</th>
                                 <td>{(new Date(offer.exposeDate)).toLocaleDateString()}</td>
                             </tr>

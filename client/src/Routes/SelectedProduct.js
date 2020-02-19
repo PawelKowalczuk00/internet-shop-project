@@ -101,7 +101,7 @@ class SelectedProduct extends React.Component {
         return (
             <>
                 <div className="col-12 col-md-10 offset-lg-1 col-lg-9">
-                    <img src={`/prodImg/${product.imgUrl}`} alt="Product" className="img-full" />
+                    <img src={`https://internet-shop-project-pk2020.herokuapp.com/prodImg/${product.imgUrl}`} alt="Product" className="img-full" />
                     <div>{this.state.error ? <span className="text-danger m-2">{this.state.error}</span> : null}</div>
                     <div className="text-right">
                         {this.renderButton()}
