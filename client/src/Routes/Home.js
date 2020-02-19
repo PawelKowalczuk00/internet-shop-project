@@ -57,7 +57,7 @@ class Home extends React.Component {
                         <li><a href="https://devcenter.heroku.com/articles/heroku-cli">Heroku CLI</a> utilities</li>
                     </ul>
                 </div>
-                <div className="col-12 offset-md-2 col-md-10 col-lg-4 bracket git">
+                <div className="col-12 offset-md-2 col-md-10 offset-lg-0 col-lg-4 bracket git">
                     <div className="text-center mb-2">
                         <a target="_blank" href="https://github.com/"><img className="m-1 ml-2 d-inline-block" src={gitLogo} alt="GitHub" /></a>
                     </div>
