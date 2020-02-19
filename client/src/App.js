@@ -23,7 +23,7 @@ import Bought from './Routes/Bought';
 import Deleted from './Routes/Deleted';
 
 import './css/App.css';
-import add from './images/add.png';
+//import add from './images/add.png';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -53,7 +53,7 @@ const App = () => {
       </BrowserRouter>
       <footer>
         Paweł Kowalczuk - Internet Shop
-        <span className="text-right">V:1.3.2</span>
+        <span className="text-right">V:1.3.4</span>
       </footer>
     </Provider>
   );

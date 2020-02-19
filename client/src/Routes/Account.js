@@ -108,7 +108,7 @@ export class AccountTransactions extends React.Component {
                 state: { existingProduct: false }
             }} />
         return (
-            <table className="table table-bordered table-hover mb-2">
+            <table className="table table-primary table-bordered table-hover mb-2">
                 <thead>
                     <tr>
                         <th scope="col">Product</th>
