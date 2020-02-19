@@ -48,7 +48,7 @@ class Home extends React.Component {
                         <li>Google fonts and fontello</li>
                     </ul>
                 </div>
-                <div className="col-12 offset-md-2 col-md-10 offset-lg-0 col-lg-4 bracket heroku">
+                <div className="col-12 offset-md-2 col-md-10 col-lg-4 bracket heroku">
                     <div className="text-center mb-2">
                         <a target="_blank" target="_blank" href="https://dashboard.heroku.com"><img className="m-1 ml-2 d-inline-block" src={herokuLogo} alt="Heroku" /></a>
                     </div>
