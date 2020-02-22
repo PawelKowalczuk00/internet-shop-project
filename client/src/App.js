@@ -53,7 +53,7 @@ const App = () => {
       </BrowserRouter>
       <footer>
         Paweł Kowalczuk - Internet Shop
-        <span className="text-right">V:1.3.4</span>
+        <span className="text-right">V:1.4.0</span>
       </footer>
     </Provider>
   );
