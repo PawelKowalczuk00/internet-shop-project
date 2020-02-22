@@ -77,8 +77,8 @@ route.put('/edit/:id', upload.single('picture'), async (req, res) => {
         product.description = value.description;
         product.price = value.price;
         if (req.file)
-            fs.unlink(`client/build/prodImg/${product.imgUrl}`, err => {
-                console.log('Picture updating process:', err);
+                fs.unlinkSync(`client/build/prodImg/${product.imgUrl}`, err => {
+                console.log('Picture updating process: ', err);
                 let imgPath = "";
                 imgPath = req.file.filename;
                 product.imgUrl = imgPath;

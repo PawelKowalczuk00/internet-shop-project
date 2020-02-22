@@ -161,7 +161,7 @@ export class AccountLayout extends React.Component {
             .then(res => this.setState({ main: res.data }))
             .catch(er => {
                 console.log(er);
-                this.setState({ error: er.response?.data || er.message });
+                this.setState({ error: er.message || er.statusText });
                 this.props.info({ route: "/login" });
                 setTimeout(() => this.mounted ? this.setState({ redirect: "/user" }) : null, 2000);
             })
@@ -174,7 +174,7 @@ export class AccountLayout extends React.Component {
             .then(res => this.setState({ transactions: res.data }))
             .catch(er => {
                 console.log(er);
-                this.setState({ error: er.response?.data || er.message });
+                this.setState({ error: er.message || er.statusText });
                 this.props.info({ route: "/login" });
                 setTimeout(() => this.mounted ? this.setState({ redirect: "/user" }) : null, 2000);
             })
@@ -193,7 +193,7 @@ export class AccountLayout extends React.Component {
         }
         catch (er) {
             console.log(er);
-            this.setState({ error: er.response?.data || er.message });
+            this.setState({ error: er.message || er.statusText });
             this.props.info({ route: "/login" });
             setTimeout(() => this.mounted ? this.setState({ redirect: "/user" }) : null, 2000);
         }

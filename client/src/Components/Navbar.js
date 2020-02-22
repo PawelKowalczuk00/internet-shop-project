@@ -72,7 +72,6 @@ class Navbar extends React.Component {
                 <div className="mx-2 ml-md-3 mr-lg-5 text-center" onClick={this.onNavOtherClick}>
                     <div className="d-inline-block mx-1 mx-lg-3 thumbnails">
                         <Link to="/user">
-                            Account 
                             <i className="icon-adult text-white" />
                         </Link>
                     </div>

@@ -62,7 +62,7 @@ class Register extends React.Component {
                 if (er.response)
                     this.setState({ error: er.response.data });
                 else
-                    this.setState({ error: er.messsage });
+                    this.setState({ error: er.message || er.statusText });
             })
             .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }

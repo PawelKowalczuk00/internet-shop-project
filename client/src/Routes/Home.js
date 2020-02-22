@@ -56,7 +56,7 @@ class Home extends React.Component {
                     </div>
                     <h5>Hosting:</h5>
                     <ul className="ml-3">
-                        <li><a href="https://devcenter.heroku.com/articles/heroku-cli">Heroku CLI</a> utilities</li>
+                        <li><a target="_blank" href="https://devcenter.heroku.com/articles/heroku-cli">Heroku CLI</a> utilities</li>
                     </ul>
                 </div>
                 <div className="col-12 offset-md-2 col-md-10 offset-lg-0 col-lg-4 bracket git">
@@ -64,9 +64,9 @@ class Home extends React.Component {
                         <a target="_blank" href="https://github.com/"><img className="m-1 ml-2 d-inline-block" src={gitLogo} alt="GitHub" /></a>
                     </div>
                     <h5>View the source code in GitHub:</h5>
-                    <h6><a target="_blank" href="https://github.com/">sdvsfvdfv</a></h6>
+                    <h6><a target="_blank" href="https://github.com/PawelKowalczuk00/internet-shop-project">Internet shop project</a></h6>
                     <p className="mt-4 mb-0">Also check out my other project:</p>
-                    <p><a target="_blank" href="https://github.com/">sdvsfvdfv</a></p>
+                    <p><a target="_blank" href="https://cc-team-alfa.github.io/EscapeRoomFrontend/">Room reservation</a> - group project</p>
                 </div>
             </div>
         );

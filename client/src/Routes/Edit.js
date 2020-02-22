@@ -61,7 +61,7 @@ class Edit extends React.Component {
             })
             .catch(er => {
                 console.log(er);
-                this.setState({ error: er.response?.data || er.statusText });
+                this.setState({ error: er.message || er.statusText });
             })
             .finally(() => this.mounted ? this.setState({ loader: false }) : null);
     }

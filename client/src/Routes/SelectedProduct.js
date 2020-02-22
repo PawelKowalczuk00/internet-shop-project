@@ -34,7 +34,7 @@ class SelectedProduct extends React.Component {
                 if (er.response)
                     this.setState({ error: er.response.data });
                 else
-                    this.setState({ error: er.messsage });
+                    this.setState({ error: er.message || er.statusText });
             })
             .finally(() => {
                 if (this.mounted) {
@@ -88,7 +88,7 @@ class SelectedProduct extends React.Component {
             return (
                 <>
                     <button className="btn btn-danger m-1 d-inline-block" onClick={this.delete} disabled={this.state.disabled}>Delete offer</button>
-                    <button className="btn btn-primary mr-4 d-inline-block" onClick={e => this.setState({ redirect: "/edit/"+this.props.product._id })} disabled={this.state.disabled}>Edit offer</button>
+                    <button className="btn btn-primary mr-4 d-inline-block" onClick={e => this.setState({ redirect: "/edit/" + this.props.product._id })} disabled={this.state.disabled}>Edit offer</button>
                 </>
             );
         }
