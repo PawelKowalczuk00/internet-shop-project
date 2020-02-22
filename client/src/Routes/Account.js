@@ -161,7 +161,7 @@ export class AccountLayout extends React.Component {
             .then(res => this.setState({ main: res.data }))
             .catch(er => {
                 console.log(er);
-                this.setState({ error: er.message || er.statusText });
+                this.setState({ error: er.response?.data || "Could not log in, try again" });
                 this.props.info({ route: "/login" });
                 setTimeout(() => this.mounted ? this.setState({ redirect: "/user" }) : null, 2000);
             })
@@ -174,7 +174,7 @@ export class AccountLayout extends React.Component {
             .then(res => this.setState({ transactions: res.data }))
             .catch(er => {
                 console.log(er);
-                this.setState({ error: er.message || er.statusText });
+                this.setState({ error: er.response?.data || "Could not log in, try again" });
                 this.props.info({ route: "/login" });
                 setTimeout(() => this.mounted ? this.setState({ redirect: "/user" }) : null, 2000);
             })
@@ -186,14 +186,14 @@ export class AccountLayout extends React.Component {
         try {
             this.state.main.activeProducts.sort();
             let activeOffers = [];
-            for (let id of this.state.main.activeProducts) {
+            for (let id of this.state.main?.activeProducts) {
                 activeOffers.unshift((await getSingleProduct(id)).data);
             }
             this.setState({ activeOffers });
         }
         catch (er) {
             console.log(er);
-            this.setState({ error: er.message || er.statusText });
+            this.setState({ error: er.response?.data || "Could not log in, try again" });
             this.props.info({ route: "/login" });
             setTimeout(() => this.mounted ? this.setState({ redirect: "/user" }) : null, 2000);
         }

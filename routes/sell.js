@@ -76,16 +76,20 @@ route.put('/edit/:id', upload.single('picture'), async (req, res) => {
         product.name = value.name;
         product.description = value.description;
         product.price = value.price;
+        console.log('req.file :', req.file);
         if (req.file)
-                fs.unlinkSync(`client/build/prodImg/${product.imgUrl}`, err => {
-                console.log('Picture updating process: ', err);
-                let imgPath = "";
-                imgPath = req.file.filename;
-                product.imgUrl = imgPath;
+            fs.unlink(`client/build/prodImg/${product.imgUrl}`, async err => {
+                console.log('Unlinking process:', err);
+                product.imgUrl = req.file.filename;
+                await product.save();
+                sendProdPutEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
+                return res.send(product);
             });
-        await product.save();
-        sendProdPutEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
-        return res.send(product);
+        else {
+            await product.save();
+            sendProdPutEmail(req.user.email, `${req.user.name} ${req.user.surname}`, product);
+            return res.send(product);
+        }
     }
     else
         return res.status(404).send("Product not found, therefore it could not be updated.");

@@ -14,7 +14,7 @@ class Products extends React.Component {
         super(props);
         this.state = {
             redirect: false, loader: true, error: null,
-            filters: { minPrice: 0, maxPrice: 99999, keywords: this.props.location?.state?.keywords || undefined },
+            filters: { minPrice: 0, maxPrice: 99999, keywords: this.props.location?.state?.keywords },
             display: { page: 0, range: 9, sort: "name", order: "" }
         };
     }
@@ -62,7 +62,7 @@ class Products extends React.Component {
     onSearchChange = text => {
         this.setState({
             filters: {
-                keywords: text.trim().split(" "),
+                keywords: text,
                 maxPrice: this.state.filters.maxPrice,
                 minPrice: this.state.filters.minPrice
             }
@@ -193,7 +193,7 @@ class Products extends React.Component {
                 </div>
                 <div className="col-12 col-sm-9 col-md-9">
                     <form className="searchbar" onSubmit={this.onSearchSubmit}>
-                        <input type="text" placeholder="Search for product" value={this.state.filters?.keywords?.join(" ")}
+                        <input type="text" placeholder="Search for product" value={this.state.filters?.keywords}
                             onChange={e => this.onSearchChange(e.target.value)} />
                         <button type="submit" className="btn-danger ml-2"><i className="icon-search" /></button>
                     </form>

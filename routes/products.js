@@ -18,7 +18,7 @@ route.post('/', async (req, res) => {
     let { keywords } = value;
     let productsList, howMany;
     if (keywords) {
-        keywords = keywords.map(word => word.toLowerCase());
+        keywords = keywords.trim().toLowerCase().split(" ")
         productsList = await Product
             .find({ finalized: false, price: { $gte: minPrice, $lte: maxPrice } })
             .or([{ name: { $in: keywords } }, { description: { $in: keywords } }])
@@ -60,7 +60,7 @@ const validateFilters = (filters) => {
     const schema = joi.object({
         minPrice: joi.number().min(0).max(999999),
         maxPrice: joi.number().min(0).max(999999),
-        keywords: joi.array()
+        keywords: joi.string()
     });
     return schema.validate(filters);
 }

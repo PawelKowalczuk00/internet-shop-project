@@ -35,7 +35,7 @@ class Navbar extends React.Component {
                     <Link to={{
                         pathname: "/products",
                         //sendings to /products will be avaiable at props.location.state.keywords
-                        state: { keywords: this.state.keywords.trim().split(" ") }
+                        state: { keywords: this.state.keywords }
                     }}>
                         <button onClick={this.onNavSearchClick}><i className="icon-search" /></button>
                     </Link>

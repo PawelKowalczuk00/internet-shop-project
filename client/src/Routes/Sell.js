@@ -64,7 +64,7 @@ class Sell extends React.Component {
             })
             .catch(er => {
                 console.log(er);
-                this.setState({ error: er.statusText });
+                this.setState({ error: er.response?.data || er.message });
                 setTimeout(() => {
                     if (er.response?.status === 401) {
                         this.setState({ redirect: "/login" });
