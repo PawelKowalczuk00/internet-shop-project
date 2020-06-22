@@ -1,6 +1,6 @@
 {
   "name": "internet-shop",
-  "version": "1.0.0",
+  "version": "1.4.2",
   "description": "React and node application",
   "main": "index.js",
   "type": "module",

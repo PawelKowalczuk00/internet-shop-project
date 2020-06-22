@@ -32,7 +32,7 @@ const App = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Navbar />
-        <div className="container mx-1 mx-md-2 mx-lg-5 mb-3">
+        <div className="container mx-1 mx-lg-5 mb-3">
           <div className="row">
             <Route path="/" exact component={Home} />
             <Route path="/products" exact component={Products} />
@@ -53,7 +53,7 @@ const App = () => {
       </BrowserRouter>
       <footer>
         Paweł Kowalczuk - Internet Shop
-        <span className="text-right">V:1.4.1</span>
+        <span className="text-right">V:1.4.2</span>
       </footer>
     </Provider>
   );

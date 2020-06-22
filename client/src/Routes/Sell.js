@@ -16,7 +16,7 @@ class Sell extends React.Component {
         this.state = {
             name: "", description: "", price: 0, picture: undefined,
             error: null, loader: false, redirect: false,
-            disabled: true, badPicture: false
+            badPicture: false
         }
     }
 
@@ -25,8 +25,6 @@ class Sell extends React.Component {
         this.createdOffer_id = undefined;
         if (!(storage().getItem('email')))
             this.setState({ error: "You have to be logged in and verified to sell products" });
-        else
-            this.setState({ disabled: false })
     }
 
     componentWillUnmount() {
@@ -115,7 +113,7 @@ class Sell extends React.Component {
                     <input onChange={this.onPictureChange} type="file" className="form-control" id="picture" />
                     <button type="button" onClick={this.onResetClick} className="reset"><i className="icon-cancel text-white" /></button>
                 </div>
-                <button type="submit" className="btn-block btn-success font-weight-bolder" disabled={this.state.disabled || this.state.badPicture}>Create an offer</button>
+                <button type="submit" className="btn-block btn-success font-weight-bolder" disabled={this.state.badPicture}>Create an offer</button>
             </form>
         );
     }
